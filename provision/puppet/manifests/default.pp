@@ -19,4 +19,15 @@ class { 'java':
 
 class { 'nodejs':
   version => 'lts',
+  target_dir => '/bin',
+}
+
+package { 'yo':
+  provider => 'npm',
+  require  => Class['nodejs']
+}
+
+package { 'yo':
+  provider => 'npm',
+  require  => Class['generator-jhipster']
 }
