@@ -17,6 +17,10 @@ class { 'java':
 	distribution => 'jre',
 }
 
+package { 'maven':
+	require  => Class['java'],
+}
+
 class { 'nodejs':
   version => 'lts',
   target_dir => '/bin',
@@ -24,10 +28,10 @@ class { 'nodejs':
 
 package { 'yo':
   provider => 'npm',
-  require  => Class['nodejs']
+  require  => Class['nodejs'],
 }
 
-package { 'yo':
+package { 'generator-jhipster':
   provider => 'npm',
-  require  => Class['generator-jhipster']
+  require  => Class['nodejs'],
 }
