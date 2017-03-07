@@ -13,8 +13,9 @@ group { "puppet":
 	ensure => "present",
 }
 
-class { 'java':
-	distribution => 'jre',
+class { 'java' : 
+  distribution  => 'jdk',
+  package       => 'java-1.8.0-openjdk-devel',
 }
 
 package { 'maven':
@@ -32,6 +33,11 @@ package { 'yo':
 }
 
 package { 'generator-jhipster':
+  provider => 'npm',
+  require  => Class['nodejs'],
+}
+
+package { 'yarn':
   provider => 'npm',
   require  => Class['nodejs'],
 }
