@@ -12,6 +12,13 @@
   ```
 
 * Install Yeoman
-  * `sudo yarn global add yo`
+
+  ```
+  sudo yarn global add yo
+  ```
+  
 * Install JHipster
-  * `sudo yarn global add generator-jhipster`
+
+  ```
+  sudo yarn global add generator-jhipster
+  ```
