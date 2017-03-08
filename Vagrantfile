@@ -12,6 +12,7 @@ Vagrant.configure(2) do |config|
     config.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
 
     override.vm.network "forwarded_port", guest: 8080, host: 8080
+	override.vm.network "forwarded_port", guest: 9000, host: 9000
   end
 
   config.puppet_install.puppet_version = "3.8.1"

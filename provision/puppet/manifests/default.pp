@@ -62,6 +62,16 @@ package { 'generator-jhipster':
   require  => Class['nodejs'],
 }
 
+package { 'bower':
+  provider => 'npm',
+  require  => Class['nodejs'],
+}
+
+package { 'gulp-cli':
+  provider => 'npm',
+  require  => Class['nodejs'],
+}
+
 package { 'yarn':
   provider => 'npm',
   require  => Class['nodejs'],
