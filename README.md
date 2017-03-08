@@ -6,8 +6,11 @@ vagrant plugin install vagrant-puppet-install (https://github.com/petems/vagrant
 ```
 # Set up environment
 
-* vagrant up
-  * Installs Puppet, Git, Java, Node.js, NPM, Yeoman
+* Install Puppet, Git, Java, Maven, Node.js, NPM, Yeoman, JHipster using Vagrant and Puppet
+  ```
+  vagrant up
+  ```
+
 * Add NPM libraries to PATH
  
   ```
