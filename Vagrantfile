@@ -1,6 +1,7 @@
 Vagrant.configure(2) do |config|
   config.vm.box = "ubuntu/trusty32"
   config.vm.hostname = "kompeteer.box"
+  config.vm.synced_folder "./", "/vagrant", id: "vagrant-root", type: "nfs"
 
   config.vm.provider :virtualbox do |config, override|
     ### Change network card to PCnet-FAST III
