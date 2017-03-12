@@ -1,0 +1,37 @@
+{
+  "generator-jhipster": {
+    "jhipsterVersion": "4.0.7",
+    "baseName": "kompeteer",
+    "packageName": "com.kompeteer.web",
+    "packageFolder": "com/kompeteer/web",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "hibernateCache": "ehcache",
+    "clusteredHttpSession": false,
+    "websocket": "spring-websocket",
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "prodDatabaseType": "postgresql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "maven",
+    "enableSocialSignIn": true,
+    "jwtSecretKey": "8d3516aaca37b6f7db6fc7d02f8964a957d86120",
+    "clientFramework": "angular2",
+    "useSass": true,
+    "clientPackageManager": "yarn",
+    "applicationType": "monolith",
+    "testFrameworks": [
+      "gatling",
+      "protractor"
+    ],
+    "jhiPrefix": "jhi",
+    "enableTranslation": true,
+    "nativeLanguage": "en",
+    "languages": [
+      "en",
+      "sv"
+    ]
+  }
+}
