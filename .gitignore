@@ -1,17 +1,19 @@
 .vagrant
 
+/bower_components
+
 ######################
 # Project Specific
 ######################
-/webapp/src/main/webapp/content/css/main.css
-/webapp/target/www/**
-/webapp/src/test/javascript/coverage/
-/webapp/src/test/javascript/PhantomJS*/
+/src/main/webapp/content/css/main.css
+/target/www/**
+/src/test/javascript/coverage/
+/src/test/javascript/PhantomJS*/
 
 ######################
 # Node
 ######################
-/webapp/node/
+/node/
 node_tmp/
 node_modules/
 npm-debug.log.*
@@ -38,7 +40,7 @@ local.properties
 .settings/
 .loadpath
 .factorypath
-/webapp/src/main/resources/rebel.xml
+/src/main/resources/rebel.xml
 
 # External tool builders
 .externalToolBuilders/**
@@ -70,14 +72,14 @@ local.properties
 ######################
 # Maven
 ######################
-/webapp/log/
-/webapp/target/
+/log/
+/target/
 
 ######################
 # Gradle
 ######################
 .gradle/
-/webapp/build/
+/build/
 
 ######################
 # Package Files
@@ -112,8 +114,8 @@ Desktop.ini
 ######################
 # Directories
 ######################
-/webapp/bin/
-/webapp/deploy/
+/bin/
+/deploy/
 
 ######################
 # Logs
