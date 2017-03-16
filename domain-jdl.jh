@@ -1,0 +1,39 @@
+entity Player {
+	firstName String,
+	lastName String,
+	email String required,
+	rating Integer
+}
+
+entity Groups {
+	name String
+}
+
+enum GameResult {
+    WHITE, BLACK, DRAW
+}
+
+entity Game {
+	result GameResult
+}
+
+relationship OneToOne {
+	Player{user} to User{player}
+}
+
+relationship OneToMany {
+	Player{whiteGame} to Game{white}	
+}
+
+relationship OneToMany {
+	Player{blackGame} to Game{black}	
+}
+
+relationship ManyToMany {
+	Player{group} to Groups{player}
+}
+
+// Set service options to all except few
+service all with serviceImpl
+// Set an angular suffix
+angularSuffix * with mySuffix
