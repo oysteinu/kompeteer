@@ -1,0 +1,23 @@
+{
+    "kompeteerApp": {
+        "game" : {
+            "home": {
+                "title": "Games",
+                "createLabel": "Skapa en ny Game",
+                "createOrEditLabel": "Skapa eller ändra en Game"
+            },
+            "created": "En ny Game är skapad med id {{ param }}",
+            "updated": "En Game är uppdaterad med id  {{ param }}",
+            "deleted": "En Game är borttagen med id  {{ param }}",
+            "delete": {
+                "question": "Är du säker på att du vill ta bort Game {{ id }}?"
+            },
+            "detail": {
+                "title": "Game"
+            },
+            "result": "Result",
+            "white": "White",
+            "black": "Black"
+        }
+    }
+}

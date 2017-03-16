@@ -1,0 +1,28 @@
+{
+    "kompeteerApp": {
+        "player" : {
+            "home": {
+                "title": "Players",
+                "createLabel": "Skapa en ny Player",
+                "createOrEditLabel": "Skapa eller ändra en Player"
+            },
+            "created": "En ny Player är skapad med id {{ param }}",
+            "updated": "En Player är uppdaterad med id  {{ param }}",
+            "deleted": "En Player är borttagen med id  {{ param }}",
+            "delete": {
+                "question": "Är du säker på att du vill ta bort Player {{ id }}?"
+            },
+            "detail": {
+                "title": "Player"
+            },
+            "firstName": "First Name",
+            "lastName": "Last Name",
+            "email": "Email",
+            "rating": "Rating",
+            "user": "User",
+            "whiteGame": "White Game",
+            "blackGame": "Black Game",
+            "group": "Group"
+        }
+    }
+}

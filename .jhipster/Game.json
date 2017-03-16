@@ -1,0 +1,29 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "white",
+            "otherEntityName": "player",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "black",
+            "otherEntityName": "player",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "result",
+            "fieldType": "GameResult",
+            "fieldValues": "WHITE,BLACK,DRAW"
+        }
+    ],
+    "changelogDate": "20170316143339",
+    "entityTableName": "game",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceImpl"
+}

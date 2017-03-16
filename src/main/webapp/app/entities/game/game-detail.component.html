@@ -1,0 +1,37 @@
+
+<div *ngIf="game">
+    <h2><span jhiTranslate="kompeteerApp.game.detail.title">Game</span> {{game.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="kompeteerApp.game.result">Result</span></dt>
+        <dd>
+            <span jhiTranslate="{{'kompeteerApp.GameResult.' + game.result}}">{{game.result}}</span>
+        </dd>
+        <dt><span jhiTranslate="kompeteerApp.game.white">White</span></dt>
+        <dd>
+            <div *ngIf="game.white">
+                <a [routerLink]="['/player', game.white?.id]">{{game.white?.id}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="kompeteerApp.game.black">Black</span></dt>
+        <dd>
+            <div *ngIf="game.black">
+                <a [routerLink]="['/player', game.black?.id]">{{game.black?.id}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'game/'+ game.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

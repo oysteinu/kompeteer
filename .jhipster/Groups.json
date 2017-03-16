@@ -1,0 +1,23 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "player",
+            "otherEntityName": "player",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "group"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20170316143339",
+    "entityTableName": "groups",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceImpl"
+}

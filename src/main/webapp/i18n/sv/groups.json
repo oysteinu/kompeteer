@@ -1,0 +1,22 @@
+{
+    "kompeteerApp": {
+        "groups" : {
+            "home": {
+                "title": "Groups",
+                "createLabel": "Skapa en ny Groups",
+                "createOrEditLabel": "Skapa eller ändra en Groups"
+            },
+            "created": "En ny Groups är skapad med id {{ param }}",
+            "updated": "En Groups är uppdaterad med id  {{ param }}",
+            "deleted": "En Groups är borttagen med id  {{ param }}",
+            "delete": {
+                "question": "Är du säker på att du vill ta bort Groups {{ id }}?"
+            },
+            "detail": {
+                "title": "Groups"
+            },
+            "name": "Name",
+            "player": "Player"
+        }
+    }
+}

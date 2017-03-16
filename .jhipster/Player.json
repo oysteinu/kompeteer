@@ -1,0 +1,59 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "user",
+            "otherEntityName": "user",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "player"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "whiteGame",
+            "otherEntityName": "game",
+            "otherEntityRelationshipName": "white"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "blackGame",
+            "otherEntityName": "game",
+            "otherEntityRelationshipName": "black"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "player",
+            "relationshipName": "group",
+            "otherEntityName": "groups",
+            "otherEntityField": "id",
+            "ownerSide": true
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "firstName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "lastName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "email",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "rating",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20170316143339",
+    "entityTableName": "player",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceImpl"
+}
