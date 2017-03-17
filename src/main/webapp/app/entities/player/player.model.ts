@@ -7,7 +7,6 @@ export class Player {
         public firstName?: string,
         public lastName?: string,
         public email?: string,
-        public rating?: number,
         public user?: User,
         public whiteGame?: Game,
         public blackGame?: Game,

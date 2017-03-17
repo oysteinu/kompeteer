@@ -1,6 +1,7 @@
 package com.kompeteer.web.web.rest.v2;
 
 import java.net.URISyntaxException;
+import java.util.List;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.codahale.metrics.annotation.Timed;
 import com.kompeteer.web.domain.Game;
 import com.kompeteer.web.domain.Groups;
+import com.kompeteer.web.domain.app.PlayerRating;
 import com.kompeteer.web.service.GroupsService;
 import com.kompeteer.web.service.business.GroupBS;
 
@@ -38,5 +40,14 @@ public class GroupV2Resource {
 		Groups group = groupsService.findOne(groupId); 
 				
 		return groupBS.getGames(group);
+	}
+	
+	@GetMapping("/groups/{groupId}/ratings")
+	@Timed
+	public List<PlayerRating> getRatings(@PathVariable("groupId") long groupId) throws URISyntaxException {
+
+		Groups group = groupsService.findOne(groupId); 
+				
+		return groupBS.getRatings(group);
 	}
 }

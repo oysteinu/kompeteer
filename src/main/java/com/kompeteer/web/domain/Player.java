@@ -36,9 +36,6 @@ public class Player implements Serializable {
     @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "rating")
-    private Integer rating;
-
     @OneToOne
     @JoinColumn(unique = true)
     private User user;
@@ -105,19 +102,6 @@ public class Player implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public Integer getRating() {
-        return rating;
-    }
-
-    public Player rating(Integer rating) {
-        this.rating = rating;
-        return this;
-    }
-
-    public void setRating(Integer rating) {
-        this.rating = rating;
     }
 
     public User getUser() {
@@ -235,7 +219,6 @@ public class Player implements Serializable {
             ", firstName='" + firstName + "'" +
             ", lastName='" + lastName + "'" +
             ", email='" + email + "'" +
-            ", rating='" + rating + "'" +
             '}';
     }
 }

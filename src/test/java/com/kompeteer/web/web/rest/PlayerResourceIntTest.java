@@ -47,9 +47,6 @@ public class PlayerResourceIntTest {
     private static final String DEFAULT_EMAIL = "AAAAAAAAAA";
     private static final String UPDATED_EMAIL = "BBBBBBBBBB";
 
-    private static final Integer DEFAULT_RATING = 1;
-    private static final Integer UPDATED_RATING = 2;
-
     @Autowired
     private PlayerRepository playerRepository;
 
@@ -92,8 +89,7 @@ public class PlayerResourceIntTest {
         Player player = new Player()
             .firstName(DEFAULT_FIRST_NAME)
             .lastName(DEFAULT_LAST_NAME)
-            .email(DEFAULT_EMAIL)
-            .rating(DEFAULT_RATING);
+            .email(DEFAULT_EMAIL);
         return player;
     }
 
@@ -120,7 +116,6 @@ public class PlayerResourceIntTest {
         assertThat(testPlayer.getFirstName()).isEqualTo(DEFAULT_FIRST_NAME);
         assertThat(testPlayer.getLastName()).isEqualTo(DEFAULT_LAST_NAME);
         assertThat(testPlayer.getEmail()).isEqualTo(DEFAULT_EMAIL);
-        assertThat(testPlayer.getRating()).isEqualTo(DEFAULT_RATING);
     }
 
     @Test
@@ -173,8 +168,7 @@ public class PlayerResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(player.getId().intValue())))
             .andExpect(jsonPath("$.[*].firstName").value(hasItem(DEFAULT_FIRST_NAME.toString())))
             .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME.toString())))
-            .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL.toString())))
-            .andExpect(jsonPath("$.[*].rating").value(hasItem(DEFAULT_RATING)));
+            .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL.toString())));
     }
 
     @Test
@@ -190,8 +184,7 @@ public class PlayerResourceIntTest {
             .andExpect(jsonPath("$.id").value(player.getId().intValue()))
             .andExpect(jsonPath("$.firstName").value(DEFAULT_FIRST_NAME.toString()))
             .andExpect(jsonPath("$.lastName").value(DEFAULT_LAST_NAME.toString()))
-            .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL.toString()))
-            .andExpect(jsonPath("$.rating").value(DEFAULT_RATING));
+            .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL.toString()));
     }
 
     @Test
@@ -215,8 +208,7 @@ public class PlayerResourceIntTest {
         updatedPlayer
             .firstName(UPDATED_FIRST_NAME)
             .lastName(UPDATED_LAST_NAME)
-            .email(UPDATED_EMAIL)
-            .rating(UPDATED_RATING);
+            .email(UPDATED_EMAIL);
 
         restPlayerMockMvc.perform(put("/api/players")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -230,7 +222,6 @@ public class PlayerResourceIntTest {
         assertThat(testPlayer.getFirstName()).isEqualTo(UPDATED_FIRST_NAME);
         assertThat(testPlayer.getLastName()).isEqualTo(UPDATED_LAST_NAME);
         assertThat(testPlayer.getEmail()).isEqualTo(UPDATED_EMAIL);
-        assertThat(testPlayer.getRating()).isEqualTo(UPDATED_RATING);
     }
 
     @Test

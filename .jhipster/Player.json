@@ -45,10 +45,6 @@
             "fieldValidateRules": [
                 "required"
             ]
-        },
-        {
-            "fieldName": "rating",
-            "fieldType": "Integer"
         }
     ],
     "changelogDate": "20170316143339",

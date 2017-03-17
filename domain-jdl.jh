@@ -1,8 +1,7 @@
 entity Player {
 	firstName String,
 	lastName String,
-	email String required,
-	rating Integer
+	email String required	
 }
 
 entity Groups {
@@ -13,8 +12,17 @@ enum GameResult {
     WHITE, BLACK, DRAW
 }
 
+enum GameStatus {
+	PENDING, COMPLETE
+}
+
 entity Game {
-	result GameResult
+	status GameStatus,
+	result GameResult	
+}
+
+entity Tournament {
+	title String
 }
 
 relationship OneToOne {
@@ -27,6 +35,14 @@ relationship OneToMany {
 
 relationship OneToMany {
 	Player{blackGame} to Game{black}	
+}
+
+relationship OneToMany {
+	Tournament{game} to Game
+}
+
+relationship ManyToMany {
+	Player{tournament} to Tournament{player}
 }
 
 relationship ManyToMany {

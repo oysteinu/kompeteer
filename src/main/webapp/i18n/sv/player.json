@@ -18,7 +18,6 @@
             "firstName": "First Name",
             "lastName": "Last Name",
             "email": "Email",
-            "rating": "Rating",
             "user": "User",
             "whiteGame": "White Game",
             "blackGame": "Black Game",
