@@ -22,7 +22,7 @@ export class GameDeleteDialogComponent {
         public activeModal: NgbActiveModal,
         private eventManager: EventManager
     ) {
-        this.jhiLanguageService.setLocations(['game', 'gameResult']);
+        this.jhiLanguageService.setLocations(['game', 'gameStatus', 'gameResult']);
     }
 
     clear () {

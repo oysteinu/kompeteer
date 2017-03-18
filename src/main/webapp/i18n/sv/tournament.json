@@ -1,0 +1,23 @@
+{
+    "kompeteerApp": {
+        "tournament" : {
+            "home": {
+                "title": "Tournaments",
+                "createLabel": "Skapa en ny Tournament",
+                "createOrEditLabel": "Skapa eller ändra en Tournament"
+            },
+            "created": "En ny Tournament är skapad med id {{ param }}",
+            "updated": "En Tournament är uppdaterad med id  {{ param }}",
+            "deleted": "En Tournament är borttagen med id  {{ param }}",
+            "delete": {
+                "question": "Är du säker på att du vill ta bort Tournament {{ id }}?"
+            },
+            "detail": {
+                "title": "Tournament"
+            },
+            "title": "Title",
+            "game": "Game",
+            "player": "Player"
+        }
+    }
+}

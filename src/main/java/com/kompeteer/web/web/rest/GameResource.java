@@ -1,9 +1,9 @@
 package com.kompeteer.web.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-import com.kompeteer.web.domain.Game;
 import com.kompeteer.web.service.GameService;
 import com.kompeteer.web.web.rest.util.HeaderUtil;
+import com.kompeteer.web.service.dto.GameDTO;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * REST controller for managing Game.
@@ -35,18 +37,18 @@ public class GameResource {
     /**
      * POST  /games : Create a new game.
      *
-     * @param game the game to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new game, or with status 400 (Bad Request) if the game has already an ID
+     * @param gameDTO the gameDTO to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new gameDTO, or with status 400 (Bad Request) if the game has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/games")
     @Timed
-    public ResponseEntity<Game> createGame(@RequestBody Game game) throws URISyntaxException {
-        log.debug("REST request to save Game : {}", game);
-        if (game.getId() != null) {
+    public ResponseEntity<GameDTO> createGame(@RequestBody GameDTO gameDTO) throws URISyntaxException {
+        log.debug("REST request to save Game : {}", gameDTO);
+        if (gameDTO.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new game cannot already have an ID")).body(null);
         }
-        Game result = gameService.save(game);
+        GameDTO result = gameService.save(gameDTO);
         return ResponseEntity.created(new URI("/api/games/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -55,22 +57,22 @@ public class GameResource {
     /**
      * PUT  /games : Updates an existing game.
      *
-     * @param game the game to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated game,
-     * or with status 400 (Bad Request) if the game is not valid,
-     * or with status 500 (Internal Server Error) if the game couldnt be updated
+     * @param gameDTO the gameDTO to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated gameDTO,
+     * or with status 400 (Bad Request) if the gameDTO is not valid,
+     * or with status 500 (Internal Server Error) if the gameDTO couldnt be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/games")
     @Timed
-    public ResponseEntity<Game> updateGame(@RequestBody Game game) throws URISyntaxException {
-        log.debug("REST request to update Game : {}", game);
-        if (game.getId() == null) {
-            return createGame(game);
+    public ResponseEntity<GameDTO> updateGame(@RequestBody GameDTO gameDTO) throws URISyntaxException {
+        log.debug("REST request to update Game : {}", gameDTO);
+        if (gameDTO.getId() == null) {
+            return createGame(gameDTO);
         }
-        Game result = gameService.save(game);
+        GameDTO result = gameService.save(gameDTO);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, game.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, gameDTO.getId().toString()))
             .body(result);
     }
 
@@ -81,7 +83,7 @@ public class GameResource {
      */
     @GetMapping("/games")
     @Timed
-    public List<Game> getAllGames() {
+    public List<GameDTO> getAllGames() {
         log.debug("REST request to get all Games");
         return gameService.findAll();
     }
@@ -89,21 +91,21 @@ public class GameResource {
     /**
      * GET  /games/:id : get the "id" game.
      *
-     * @param id the id of the game to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the game, or with status 404 (Not Found)
+     * @param id the id of the gameDTO to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the gameDTO, or with status 404 (Not Found)
      */
     @GetMapping("/games/{id}")
     @Timed
-    public ResponseEntity<Game> getGame(@PathVariable Long id) {
+    public ResponseEntity<GameDTO> getGame(@PathVariable Long id) {
         log.debug("REST request to get Game : {}", id);
-        Game game = gameService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(game));
+        GameDTO gameDTO = gameService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(gameDTO));
     }
 
     /**
      * DELETE  /games/:id : delete the "id" game.
      *
-     * @param id the id of the game to delete
+     * @param id the id of the gameDTO to delete
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/games/{id}")

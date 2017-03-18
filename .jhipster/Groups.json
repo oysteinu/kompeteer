@@ -17,7 +17,7 @@
     ],
     "changelogDate": "20170316143339",
     "entityTableName": "groups",
-    "dto": "no",
+    "dto": "mapstruct",
     "pagination": "no",
     "service": "serviceImpl"
 }

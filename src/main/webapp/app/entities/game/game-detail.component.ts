@@ -18,7 +18,7 @@ export class GameDetailComponent implements OnInit, OnDestroy {
         private gameService: GameService,
         private route: ActivatedRoute
     ) {
-        this.jhiLanguageService.setLocations(['game', 'gameResult']);
+        this.jhiLanguageService.setLocations(['game', 'gameStatus', 'gameResult']);
     }
 
     ngOnInit() {

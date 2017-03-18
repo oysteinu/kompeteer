@@ -15,6 +15,13 @@
                    [(ngModel)]="game.id" readonly />
         </div>
         <div class="form-group">
+            <label class="form-control-label" jhiTranslate="kompeteerApp.game.status" for="field_status">Status</label>
+            <select class="form-control" name="status" [(ngModel)]="game.status" id="field_status" >
+                <option value="PENDING" jhiTranslate="kompeteerApp.GameStatus.PENDING">PENDING</option>
+                <option value="COMPLETE" jhiTranslate="kompeteerApp.GameStatus.COMPLETE">COMPLETE</option>
+            </select>
+        </div>
+        <div class="form-group">
             <label class="form-control-label" jhiTranslate="kompeteerApp.game.result" for="field_result">Result</label>
             <select class="form-control" name="result" [(ngModel)]="game.result" id="field_result" >
                 <option value="WHITE" jhiTranslate="kompeteerApp.GameResult.WHITE">WHITE</option>
@@ -25,16 +32,23 @@
 
         <div class="form-group">
             <label jhiTranslate="kompeteerApp.game.white" for="field_white">White</label>
-            <select class="form-control" id="field_white" name="white" [(ngModel)]="game.white" >
+            <select class="form-control" id="field_white" name="white" [(ngModel)]="game.whiteId" >
                 <option [ngValue]="null"></option>
-                <option [ngValue]="playerOption.id === game.white?.id ? game.white : playerOption" *ngFor="let playerOption of players; trackBy: trackPlayerById">{{playerOption.id}}</option>
+                <option [ngValue]="playerOption.id" *ngFor="let playerOption of players; trackBy: trackPlayerById">{{playerOption.id}}</option>
             </select>
         </div>
         <div class="form-group">
             <label jhiTranslate="kompeteerApp.game.black" for="field_black">Black</label>
-            <select class="form-control" id="field_black" name="black" [(ngModel)]="game.black" >
+            <select class="form-control" id="field_black" name="black" [(ngModel)]="game.blackId" >
                 <option [ngValue]="null"></option>
-                <option [ngValue]="playerOption.id === game.black?.id ? game.black : playerOption" *ngFor="let playerOption of players; trackBy: trackPlayerById">{{playerOption.id}}</option>
+                <option [ngValue]="playerOption.id" *ngFor="let playerOption of players; trackBy: trackPlayerById">{{playerOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label jhiTranslate="kompeteerApp.game.tournament" for="field_tournament">Tournament</label>
+            <select class="form-control" id="field_tournament" name="tournament" [(ngModel)]="game.tournamentId" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="tournamentOption.id" *ngFor="let tournamentOption of tournaments; trackBy: trackTournamentById">{{tournamentOption.id}}</option>
             </select>
         </div>
     </div>

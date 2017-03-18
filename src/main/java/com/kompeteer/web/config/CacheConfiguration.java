@@ -48,6 +48,10 @@ public class CacheConfiguration {
             cm.createCache(com.kompeteer.web.domain.Player.class.getName() + ".whiteGames", jcacheConfiguration);
             cm.createCache(com.kompeteer.web.domain.Player.class.getName() + ".blackGames", jcacheConfiguration);
             cm.createCache(com.kompeteer.web.domain.Player.class.getName() + ".groups", jcacheConfiguration);
+            cm.createCache(com.kompeteer.web.domain.Player.class.getName() + ".tournaments", jcacheConfiguration);
+            cm.createCache(com.kompeteer.web.domain.Tournament.class.getName(), jcacheConfiguration);
+            cm.createCache(com.kompeteer.web.domain.Tournament.class.getName() + ".games", jcacheConfiguration);
+            cm.createCache(com.kompeteer.web.domain.Tournament.class.getName() + ".players", jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

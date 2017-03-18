@@ -15,9 +15,11 @@
             "detail": {
                 "title": "Game"
             },
+            "status": "Status",
             "result": "Result",
             "white": "White",
-            "black": "Black"
+            "black": "Black",
+            "tournament": "Tournament"
         }
     }
 }

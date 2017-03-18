@@ -1,6 +1,6 @@
 package com.kompeteer.web.service;
 
-import com.kompeteer.web.domain.Game;
+import com.kompeteer.web.service.dto.GameDTO;
 import java.util.List;
 
 /**
@@ -11,17 +11,17 @@ public interface GameService {
     /**
      * Save a game.
      *
-     * @param game the entity to save
+     * @param gameDTO the entity to save
      * @return the persisted entity
      */
-    Game save(Game game);
+    GameDTO save(GameDTO gameDTO);
 
     /**
      *  Get all the games.
      *  
      *  @return the list of entities
      */
-    List<Game> findAll();
+    List<GameDTO> findAll();
 
     /**
      *  Get the "id" game.
@@ -29,7 +29,7 @@ public interface GameService {
      *  @param id the id of the entity
      *  @return the entity
      */
-    Game findOne(Long id);
+    GameDTO findOne(Long id);
 
     /**
      *  Delete the "id" game.

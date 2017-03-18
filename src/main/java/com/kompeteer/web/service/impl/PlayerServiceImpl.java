@@ -3,12 +3,16 @@ package com.kompeteer.web.service.impl;
 import com.kompeteer.web.service.PlayerService;
 import com.kompeteer.web.domain.Player;
 import com.kompeteer.web.repository.PlayerRepository;
+import com.kompeteer.web.service.dto.PlayerDTO;
+import com.kompeteer.web.service.mapper.PlayerMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Service Implementation for managing Player.
@@ -21,20 +25,25 @@ public class PlayerServiceImpl implements PlayerService{
     
     private final PlayerRepository playerRepository;
 
-    public PlayerServiceImpl(PlayerRepository playerRepository) {
+    private final PlayerMapper playerMapper;
+
+    public PlayerServiceImpl(PlayerRepository playerRepository, PlayerMapper playerMapper) {
         this.playerRepository = playerRepository;
+        this.playerMapper = playerMapper;
     }
 
     /**
      * Save a player.
      *
-     * @param player the entity to save
+     * @param playerDTO the entity to save
      * @return the persisted entity
      */
     @Override
-    public Player save(Player player) {
-        log.debug("Request to save Player : {}", player);
-        Player result = playerRepository.save(player);
+    public PlayerDTO save(PlayerDTO playerDTO) {
+        log.debug("Request to save Player : {}", playerDTO);
+        Player player = playerMapper.playerDTOToPlayer(playerDTO);
+        player = playerRepository.save(player);
+        PlayerDTO result = playerMapper.playerToPlayerDTO(player);
         return result;
     }
 
@@ -45,9 +54,11 @@ public class PlayerServiceImpl implements PlayerService{
      */
     @Override
     @Transactional(readOnly = true)
-    public List<Player> findAll() {
+    public List<PlayerDTO> findAll() {
         log.debug("Request to get all Players");
-        List<Player> result = playerRepository.findAllWithEagerRelationships();
+        List<PlayerDTO> result = playerRepository.findAllWithEagerRelationships().stream()
+            .map(playerMapper::playerToPlayerDTO)
+            .collect(Collectors.toCollection(LinkedList::new));
 
         return result;
     }
@@ -60,10 +71,11 @@ public class PlayerServiceImpl implements PlayerService{
      */
     @Override
     @Transactional(readOnly = true)
-    public Player findOne(Long id) {
+    public PlayerDTO findOne(Long id) {
         log.debug("Request to get Player : {}", id);
         Player player = playerRepository.findOneWithEagerRelationships(id);
-        return player;
+        PlayerDTO playerDTO = playerMapper.playerToPlayerDTO(player);
+        return playerDTO;
     }
 
     /**

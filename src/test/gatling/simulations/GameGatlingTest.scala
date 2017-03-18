@@ -68,7 +68,7 @@ class GameGatlingTest extends Simulation {
             .exec(http("Create new game")
             .post("/api/games")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "result":null}""")).asJSON
+            .body(StringBody("""{"id":null, "status":null, "result":null}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_game_url"))).exitHereIfFailed
             .pause(10)

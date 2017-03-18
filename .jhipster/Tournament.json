@@ -1,0 +1,29 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "game",
+            "otherEntityName": "game",
+            "otherEntityRelationshipName": "tournament"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "player",
+            "otherEntityName": "player",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "tournament"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "title",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20170317132117",
+    "entityTableName": "tournament",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl"
+}

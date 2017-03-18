@@ -5,6 +5,8 @@ import com.kompeteer.web.KompeteerApp;
 import com.kompeteer.web.domain.Groups;
 import com.kompeteer.web.repository.GroupsRepository;
 import com.kompeteer.web.service.GroupsService;
+import com.kompeteer.web.service.dto.GroupsDTO;
+import com.kompeteer.web.service.mapper.GroupsMapper;
 import com.kompeteer.web.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -43,6 +45,9 @@ public class GroupsResourceIntTest {
 
     @Autowired
     private GroupsRepository groupsRepository;
+
+    @Autowired
+    private GroupsMapper groupsMapper;
 
     @Autowired
     private GroupsService groupsService;
@@ -96,9 +101,10 @@ public class GroupsResourceIntTest {
         int databaseSizeBeforeCreate = groupsRepository.findAll().size();
 
         // Create the Groups
+        GroupsDTO groupsDTO = groupsMapper.groupsToGroupsDTO(groups);
         restGroupsMockMvc.perform(post("/api/groups")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(groups)))
+            .content(TestUtil.convertObjectToJsonBytes(groupsDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Groups in the database
@@ -115,11 +121,12 @@ public class GroupsResourceIntTest {
 
         // Create the Groups with an existing ID
         groups.setId(1L);
+        GroupsDTO groupsDTO = groupsMapper.groupsToGroupsDTO(groups);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restGroupsMockMvc.perform(post("/api/groups")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(groups)))
+            .content(TestUtil.convertObjectToJsonBytes(groupsDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Alice in the database
@@ -167,18 +174,18 @@ public class GroupsResourceIntTest {
     @Transactional
     public void updateGroups() throws Exception {
         // Initialize the database
-        groupsService.save(groups);
-
+        groupsRepository.saveAndFlush(groups);
         int databaseSizeBeforeUpdate = groupsRepository.findAll().size();
 
         // Update the groups
         Groups updatedGroups = groupsRepository.findOne(groups.getId());
         updatedGroups
             .name(UPDATED_NAME);
+        GroupsDTO groupsDTO = groupsMapper.groupsToGroupsDTO(updatedGroups);
 
         restGroupsMockMvc.perform(put("/api/groups")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(updatedGroups)))
+            .content(TestUtil.convertObjectToJsonBytes(groupsDTO)))
             .andExpect(status().isOk());
 
         // Validate the Groups in the database
@@ -194,11 +201,12 @@ public class GroupsResourceIntTest {
         int databaseSizeBeforeUpdate = groupsRepository.findAll().size();
 
         // Create the Groups
+        GroupsDTO groupsDTO = groupsMapper.groupsToGroupsDTO(groups);
 
         // If the entity doesn't have an ID, it will be created instead of just being updated
         restGroupsMockMvc.perform(put("/api/groups")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(groups)))
+            .content(TestUtil.convertObjectToJsonBytes(groupsDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Groups in the database
@@ -210,8 +218,7 @@ public class GroupsResourceIntTest {
     @Transactional
     public void deleteGroups() throws Exception {
         // Initialize the database
-        groupsService.save(groups);
-
+        groupsRepository.saveAndFlush(groups);
         int databaseSizeBeforeDelete = groupsRepository.findAll().size();
 
         // Get the groups

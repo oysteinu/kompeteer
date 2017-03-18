@@ -18,7 +18,13 @@
         </dd>
         <dt><span jhiTranslate="kompeteerApp.player.user">User</span></dt>
         <dd>
-            {{player.user?.id}}
+            {{player.userId}}
+        </dd>
+        <dt><span jhiTranslate="kompeteerApp.player.tournament">Tournament</span></dt>
+        <dd>
+            <span *ngFor="let tournament of player.tournaments; let last = last">
+                <a [routerLink]="['/tournament', tournament?.id ]">{{tournament.id}}</a>{{last ? '' : ', '}}
+            </span>
         </dd>
         <dt><span jhiTranslate="kompeteerApp.player.group">Group</span></dt>
         <dd>

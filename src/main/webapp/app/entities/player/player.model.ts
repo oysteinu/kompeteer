@@ -1,16 +1,14 @@
-import { User } from '../../shared';
-import { Game } from '../game';
-import { Groups } from '../groups';
 export class Player {
     constructor(
         public id?: number,
         public firstName?: string,
         public lastName?: string,
         public email?: string,
-        public user?: User,
-        public whiteGame?: Game,
-        public blackGame?: Game,
-        public group?: Groups,
+        public userId?: number,
+        public whiteGameId?: number,
+        public blackGameId?: number,
+        public tournamentId?: number,
+        public groupId?: number,
     ) {
     }
 }

@@ -4,20 +4,30 @@
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="kompeteerApp.game.status">Status</span></dt>
+        <dd>
+            <span jhiTranslate="{{'kompeteerApp.GameStatus.' + game.status}}">{{game.status}}</span>
+        </dd>
         <dt><span jhiTranslate="kompeteerApp.game.result">Result</span></dt>
         <dd>
             <span jhiTranslate="{{'kompeteerApp.GameResult.' + game.result}}">{{game.result}}</span>
         </dd>
         <dt><span jhiTranslate="kompeteerApp.game.white">White</span></dt>
         <dd>
-            <div *ngIf="game.white">
-                <a [routerLink]="['/player', game.white?.id]">{{game.white?.id}}</a>
+            <div *ngIf="game.whiteId">
+                <a [routerLink]="['/player', game.whiteId]">{{game.whiteId}}</a>
             </div>
         </dd>
         <dt><span jhiTranslate="kompeteerApp.game.black">Black</span></dt>
         <dd>
-            <div *ngIf="game.black">
-                <a [routerLink]="['/player', game.black?.id]">{{game.black?.id}}</a>
+            <div *ngIf="game.blackId">
+                <a [routerLink]="['/player', game.blackId]">{{game.blackId}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="kompeteerApp.game.tournament">Tournament</span></dt>
+        <dd>
+            <div *ngIf="game.tournamentId">
+                <a [routerLink]="['/tournament', game.tournamentId]">{{game.tournamentId}}</a>
             </div>
         </dd>
     </dl>

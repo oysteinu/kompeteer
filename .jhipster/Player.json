@@ -24,6 +24,14 @@
         {
             "relationshipType": "many-to-many",
             "otherEntityRelationshipName": "player",
+            "relationshipName": "tournament",
+            "otherEntityName": "tournament",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "player",
             "relationshipName": "group",
             "otherEntityName": "groups",
             "otherEntityField": "id",
@@ -49,7 +57,7 @@
     ],
     "changelogDate": "20170316143339",
     "entityTableName": "player",
-    "dto": "no",
+    "dto": "mapstruct",
     "pagination": "no",
     "service": "serviceImpl"
 }

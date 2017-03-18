@@ -1,0 +1,9 @@
+{
+    "kompeteerApp": {
+        "GameStatus" : {
+            "null": "",
+            "PENDING": "PENDING",
+            "COMPLETE": "COMPLETE"
+        }
+    }
+}

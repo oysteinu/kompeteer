@@ -1,9 +1,9 @@
 package com.kompeteer.web.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-import com.kompeteer.web.domain.Groups;
 import com.kompeteer.web.service.GroupsService;
 import com.kompeteer.web.web.rest.util.HeaderUtil;
+import com.kompeteer.web.service.dto.GroupsDTO;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * REST controller for managing Groups.
@@ -35,18 +37,18 @@ public class GroupsResource {
     /**
      * POST  /groups : Create a new groups.
      *
-     * @param groups the groups to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new groups, or with status 400 (Bad Request) if the groups has already an ID
+     * @param groupsDTO the groupsDTO to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new groupsDTO, or with status 400 (Bad Request) if the groups has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/groups")
     @Timed
-    public ResponseEntity<Groups> createGroups(@RequestBody Groups groups) throws URISyntaxException {
-        log.debug("REST request to save Groups : {}", groups);
-        if (groups.getId() != null) {
+    public ResponseEntity<GroupsDTO> createGroups(@RequestBody GroupsDTO groupsDTO) throws URISyntaxException {
+        log.debug("REST request to save Groups : {}", groupsDTO);
+        if (groupsDTO.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new groups cannot already have an ID")).body(null);
         }
-        Groups result = groupsService.save(groups);
+        GroupsDTO result = groupsService.save(groupsDTO);
         return ResponseEntity.created(new URI("/api/groups/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -55,22 +57,22 @@ public class GroupsResource {
     /**
      * PUT  /groups : Updates an existing groups.
      *
-     * @param groups the groups to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated groups,
-     * or with status 400 (Bad Request) if the groups is not valid,
-     * or with status 500 (Internal Server Error) if the groups couldnt be updated
+     * @param groupsDTO the groupsDTO to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated groupsDTO,
+     * or with status 400 (Bad Request) if the groupsDTO is not valid,
+     * or with status 500 (Internal Server Error) if the groupsDTO couldnt be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/groups")
     @Timed
-    public ResponseEntity<Groups> updateGroups(@RequestBody Groups groups) throws URISyntaxException {
-        log.debug("REST request to update Groups : {}", groups);
-        if (groups.getId() == null) {
-            return createGroups(groups);
+    public ResponseEntity<GroupsDTO> updateGroups(@RequestBody GroupsDTO groupsDTO) throws URISyntaxException {
+        log.debug("REST request to update Groups : {}", groupsDTO);
+        if (groupsDTO.getId() == null) {
+            return createGroups(groupsDTO);
         }
-        Groups result = groupsService.save(groups);
+        GroupsDTO result = groupsService.save(groupsDTO);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, groups.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, groupsDTO.getId().toString()))
             .body(result);
     }
 
@@ -81,7 +83,7 @@ public class GroupsResource {
      */
     @GetMapping("/groups")
     @Timed
-    public List<Groups> getAllGroups() {
+    public List<GroupsDTO> getAllGroups() {
         log.debug("REST request to get all Groups");
         return groupsService.findAll();
     }
@@ -89,21 +91,21 @@ public class GroupsResource {
     /**
      * GET  /groups/:id : get the "id" groups.
      *
-     * @param id the id of the groups to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the groups, or with status 404 (Not Found)
+     * @param id the id of the groupsDTO to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the groupsDTO, or with status 404 (Not Found)
      */
     @GetMapping("/groups/{id}")
     @Timed
-    public ResponseEntity<Groups> getGroups(@PathVariable Long id) {
+    public ResponseEntity<GroupsDTO> getGroups(@PathVariable Long id) {
         log.debug("REST request to get Groups : {}", id);
-        Groups groups = groupsService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(groups));
+        GroupsDTO groupsDTO = groupsService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(groupsDTO));
     }
 
     /**
      * DELETE  /groups/:id : delete the "id" groups.
      *
-     * @param id the id of the groups to delete
+     * @param id the id of the groupsDTO to delete
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/groups/{id}")

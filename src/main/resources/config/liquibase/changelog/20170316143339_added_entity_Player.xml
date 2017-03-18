@@ -38,6 +38,17 @@
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
         
+        <createTable tableName="player_tournament">
+            <column name="tournaments_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="players_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="players_id, tournaments_id" tableName="player_tournament"/>
+        
         <createTable tableName="player_group">
             <column name="groups_id" type="bigint">
                 <constraints nullable="false"/>

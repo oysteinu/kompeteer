@@ -3,12 +3,16 @@ package com.kompeteer.web.service.impl;
 import com.kompeteer.web.service.GameService;
 import com.kompeteer.web.domain.Game;
 import com.kompeteer.web.repository.GameRepository;
+import com.kompeteer.web.service.dto.GameDTO;
+import com.kompeteer.web.service.mapper.GameMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Service Implementation for managing Game.
@@ -21,20 +25,25 @@ public class GameServiceImpl implements GameService{
     
     private final GameRepository gameRepository;
 
-    public GameServiceImpl(GameRepository gameRepository) {
+    private final GameMapper gameMapper;
+
+    public GameServiceImpl(GameRepository gameRepository, GameMapper gameMapper) {
         this.gameRepository = gameRepository;
+        this.gameMapper = gameMapper;
     }
 
     /**
      * Save a game.
      *
-     * @param game the entity to save
+     * @param gameDTO the entity to save
      * @return the persisted entity
      */
     @Override
-    public Game save(Game game) {
-        log.debug("Request to save Game : {}", game);
-        Game result = gameRepository.save(game);
+    public GameDTO save(GameDTO gameDTO) {
+        log.debug("Request to save Game : {}", gameDTO);
+        Game game = gameMapper.gameDTOToGame(gameDTO);
+        game = gameRepository.save(game);
+        GameDTO result = gameMapper.gameToGameDTO(game);
         return result;
     }
 
@@ -45,9 +54,11 @@ public class GameServiceImpl implements GameService{
      */
     @Override
     @Transactional(readOnly = true)
-    public List<Game> findAll() {
+    public List<GameDTO> findAll() {
         log.debug("Request to get all Games");
-        List<Game> result = gameRepository.findAll();
+        List<GameDTO> result = gameRepository.findAll().stream()
+            .map(gameMapper::gameToGameDTO)
+            .collect(Collectors.toCollection(LinkedList::new));
 
         return result;
     }
@@ -60,10 +71,11 @@ public class GameServiceImpl implements GameService{
      */
     @Override
     @Transactional(readOnly = true)
-    public Game findOne(Long id) {
+    public GameDTO findOne(Long id) {
         log.debug("Request to get Game : {}", id);
         Game game = gameRepository.findOne(id);
-        return game;
+        GameDTO gameDTO = gameMapper.gameToGameDTO(game);
+        return gameDTO;
     }
 
     /**

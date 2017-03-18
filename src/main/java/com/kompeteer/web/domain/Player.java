@@ -52,6 +52,13 @@ public class Player implements Serializable {
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "player_tournament",
+               joinColumns = @JoinColumn(name="players_id", referencedColumnName="id"),
+               inverseJoinColumns = @JoinColumn(name="tournaments_id", referencedColumnName="id"))
+    private Set<Tournament> tournaments = new HashSet<>();
+
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "player_group",
                joinColumns = @JoinColumn(name="players_id", referencedColumnName="id"),
                inverseJoinColumns = @JoinColumn(name="groups_id", referencedColumnName="id"))
@@ -165,6 +172,31 @@ public class Player implements Serializable {
 
     public void setBlackGames(Set<Game> games) {
         this.blackGames = games;
+    }
+
+    public Set<Tournament> getTournaments() {
+        return tournaments;
+    }
+
+    public Player tournaments(Set<Tournament> tournaments) {
+        this.tournaments = tournaments;
+        return this;
+    }
+
+    public Player addTournament(Tournament tournament) {
+        this.tournaments.add(tournament);
+        tournament.getPlayers().add(this);
+        return this;
+    }
+
+    public Player removeTournament(Tournament tournament) {
+        this.tournaments.remove(tournament);
+        tournament.getPlayers().remove(this);
+        return this;
+    }
+
+    public void setTournaments(Set<Tournament> tournaments) {
+        this.tournaments = tournaments;
     }
 
     public Set<Groups> getGroups() {

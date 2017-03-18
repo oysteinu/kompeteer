@@ -17,24 +17,32 @@
             <thead>
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="kompeteerApp.game.status">Status</span></th>
             <th><span jhiTranslate="kompeteerApp.game.result">Result</span></th>
             <th><span jhiTranslate="kompeteerApp.game.white">White</span></th>
             <th><span jhiTranslate="kompeteerApp.game.black">Black</span></th>
+            <th><span jhiTranslate="kompeteerApp.game.tournament">Tournament</span></th>
             <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let game of games ;trackBy: trackId">
                 <td><a [routerLink]="['../game', game.id ]">{{game.id}}</a></td>
+                <td jhiTranslate="{{'kompeteerApp.GameStatus.' + game.status}}">{{game.status}}</td>
                 <td jhiTranslate="{{'kompeteerApp.GameResult.' + game.result}}">{{game.result}}</td>
                 <td>
-                    <div *ngIf="game.white">
-                        <a [routerLink]="['../player', game.white?.id ]" >{{game.white?.id}}</a>
+                    <div *ngIf="game.whiteId">
+                        <a [routerLink]="['../player', game.whiteId  ]" >{{game.whiteId}}</a>
                     </div>
                 </td>
                 <td>
-                    <div *ngIf="game.black">
-                        <a [routerLink]="['../player', game.black?.id ]" >{{game.black?.id}}</a>
+                    <div *ngIf="game.blackId">
+                        <a [routerLink]="['../player', game.blackId  ]" >{{game.blackId}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="game.tournamentId">
+                        <a [routerLink]="['../tournament', game.tournamentId  ]" >{{game.tournamentId}}</a>
                     </div>
                 </td>
                 <td class="text-right">

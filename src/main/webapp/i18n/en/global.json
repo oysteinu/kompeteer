@@ -10,6 +10,7 @@
                 "game": "Game",
                 "groups": "Groups",
                 "player": "Player",
+                "tournament": "Tournament",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

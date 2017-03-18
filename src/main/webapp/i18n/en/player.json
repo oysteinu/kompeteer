@@ -21,6 +21,7 @@
             "user": "User",
             "whiteGame": "White Game",
             "blackGame": "Black Game",
+            "tournament": "Tournament",
             "group": "Group"
         }
     }

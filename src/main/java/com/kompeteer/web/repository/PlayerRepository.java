@@ -13,10 +13,10 @@ import java.util.List;
 @SuppressWarnings("unused")
 public interface PlayerRepository extends JpaRepository<Player,Long> {
 
-    @Query("select distinct player from Player player left join fetch player.groups")
+    @Query("select distinct player from Player player left join fetch player.tournaments left join fetch player.groups")
     List<Player> findAllWithEagerRelationships();
 
-    @Query("select player from Player player left join fetch player.groups where player.id =:id")
+    @Query("select player from Player player left join fetch player.tournaments left join fetch player.groups where player.id =:id")
     Player findOneWithEagerRelationships(@Param("id") Long id);
 
 }

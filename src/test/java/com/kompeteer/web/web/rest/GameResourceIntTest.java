@@ -5,6 +5,8 @@ import com.kompeteer.web.KompeteerApp;
 import com.kompeteer.web.domain.Game;
 import com.kompeteer.web.repository.GameRepository;
 import com.kompeteer.web.service.GameService;
+import com.kompeteer.web.service.dto.GameDTO;
+import com.kompeteer.web.service.mapper.GameMapper;
 import com.kompeteer.web.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -29,6 +31,7 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.kompeteer.web.domain.enumeration.GameStatus;
 import com.kompeteer.web.domain.enumeration.GameResult;
 /**
  * Test class for the GameResource REST controller.
@@ -39,11 +42,17 @@ import com.kompeteer.web.domain.enumeration.GameResult;
 @SpringBootTest(classes = KompeteerApp.class)
 public class GameResourceIntTest {
 
+    private static final GameStatus DEFAULT_STATUS = GameStatus.PENDING;
+    private static final GameStatus UPDATED_STATUS = GameStatus.COMPLETE;
+
     private static final GameResult DEFAULT_RESULT = GameResult.WHITE;
     private static final GameResult UPDATED_RESULT = GameResult.BLACK;
 
     @Autowired
     private GameRepository gameRepository;
+
+    @Autowired
+    private GameMapper gameMapper;
 
     @Autowired
     private GameService gameService;
@@ -82,6 +91,7 @@ public class GameResourceIntTest {
      */
     public static Game createEntity(EntityManager em) {
         Game game = new Game()
+            .status(DEFAULT_STATUS)
             .result(DEFAULT_RESULT);
         return game;
     }
@@ -97,15 +107,17 @@ public class GameResourceIntTest {
         int databaseSizeBeforeCreate = gameRepository.findAll().size();
 
         // Create the Game
+        GameDTO gameDTO = gameMapper.gameToGameDTO(game);
         restGameMockMvc.perform(post("/api/games")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(game)))
+            .content(TestUtil.convertObjectToJsonBytes(gameDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Game in the database
         List<Game> gameList = gameRepository.findAll();
         assertThat(gameList).hasSize(databaseSizeBeforeCreate + 1);
         Game testGame = gameList.get(gameList.size() - 1);
+        assertThat(testGame.getStatus()).isEqualTo(DEFAULT_STATUS);
         assertThat(testGame.getResult()).isEqualTo(DEFAULT_RESULT);
     }
 
@@ -116,11 +128,12 @@ public class GameResourceIntTest {
 
         // Create the Game with an existing ID
         game.setId(1L);
+        GameDTO gameDTO = gameMapper.gameToGameDTO(game);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restGameMockMvc.perform(post("/api/games")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(game)))
+            .content(TestUtil.convertObjectToJsonBytes(gameDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Alice in the database
@@ -139,6 +152,7 @@ public class GameResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(game.getId().intValue())))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
             .andExpect(jsonPath("$.[*].result").value(hasItem(DEFAULT_RESULT.toString())));
     }
 
@@ -153,6 +167,7 @@ public class GameResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(game.getId().intValue()))
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
             .andExpect(jsonPath("$.result").value(DEFAULT_RESULT.toString()));
     }
 
@@ -168,24 +183,26 @@ public class GameResourceIntTest {
     @Transactional
     public void updateGame() throws Exception {
         // Initialize the database
-        gameService.save(game);
-
+        gameRepository.saveAndFlush(game);
         int databaseSizeBeforeUpdate = gameRepository.findAll().size();
 
         // Update the game
         Game updatedGame = gameRepository.findOne(game.getId());
         updatedGame
+            .status(UPDATED_STATUS)
             .result(UPDATED_RESULT);
+        GameDTO gameDTO = gameMapper.gameToGameDTO(updatedGame);
 
         restGameMockMvc.perform(put("/api/games")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(updatedGame)))
+            .content(TestUtil.convertObjectToJsonBytes(gameDTO)))
             .andExpect(status().isOk());
 
         // Validate the Game in the database
         List<Game> gameList = gameRepository.findAll();
         assertThat(gameList).hasSize(databaseSizeBeforeUpdate);
         Game testGame = gameList.get(gameList.size() - 1);
+        assertThat(testGame.getStatus()).isEqualTo(UPDATED_STATUS);
         assertThat(testGame.getResult()).isEqualTo(UPDATED_RESULT);
     }
 
@@ -195,11 +212,12 @@ public class GameResourceIntTest {
         int databaseSizeBeforeUpdate = gameRepository.findAll().size();
 
         // Create the Game
+        GameDTO gameDTO = gameMapper.gameToGameDTO(game);
 
         // If the entity doesn't have an ID, it will be created instead of just being updated
         restGameMockMvc.perform(put("/api/games")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(game)))
+            .content(TestUtil.convertObjectToJsonBytes(gameDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Game in the database
@@ -211,8 +229,7 @@ public class GameResourceIntTest {
     @Transactional
     public void deleteGame() throws Exception {
         // Initialize the database
-        gameService.save(game);
-
+        gameRepository.saveAndFlush(game);
         int databaseSizeBeforeDelete = gameRepository.findAll().size();
 
         // Get the game

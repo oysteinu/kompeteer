@@ -12,9 +12,20 @@
             "relationshipName": "black",
             "otherEntityName": "player",
             "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "tournament",
+            "otherEntityName": "tournament",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
         }
     ],
     "fields": [
+        {
+            "fieldName": "status",
+            "fieldType": "GameStatus",
+            "fieldValues": "PENDING,COMPLETE"
+        },
         {
             "fieldName": "result",
             "fieldType": "GameResult",
@@ -23,7 +34,7 @@
     ],
     "changelogDate": "20170316143339",
     "entityTableName": "game",
-    "dto": "no",
+    "dto": "mapstruct",
     "pagination": "no",
     "service": "serviceImpl"
 }

@@ -7,6 +7,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.kompeteer.web.domain.enumeration.GameStatus;
+
 import com.kompeteer.web.domain.enumeration.GameResult;
 
 /**
@@ -25,6 +27,10 @@ public class Game implements Serializable {
     private Long id;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private GameStatus status;
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "result")
     private GameResult result;
 
@@ -34,12 +40,28 @@ public class Game implements Serializable {
     @ManyToOne
     private Player black;
 
+    @ManyToOne
+    private Tournament tournament;
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public GameStatus getStatus() {
+        return status;
+    }
+
+    public Game status(GameStatus status) {
+        this.status = status;
+        return this;
+    }
+
+    public void setStatus(GameStatus status) {
+        this.status = status;
     }
 
     public GameResult getResult() {
@@ -81,6 +103,19 @@ public class Game implements Serializable {
         this.black = player;
     }
 
+    public Tournament getTournament() {
+        return tournament;
+    }
+
+    public Game tournament(Tournament tournament) {
+        this.tournament = tournament;
+        return this;
+    }
+
+    public void setTournament(Tournament tournament) {
+        this.tournament = tournament;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -105,6 +140,7 @@ public class Game implements Serializable {
     public String toString() {
         return "Game{" +
             "id=" + id +
+            ", status='" + status + "'" +
             ", result='" + result + "'" +
             '}';
     }

@@ -10,6 +10,7 @@ import { PlayerPopupService } from './player-popup.service';
 import { PlayerService } from './player.service';
 import { User, UserService } from '../../shared';
 import { Game, GameService } from '../game';
+import { Tournament, TournamentService } from '../tournament';
 import { Groups, GroupsService } from '../groups';
 @Component({
     selector: 'jhi-player-dialog',
@@ -25,6 +26,8 @@ export class PlayerDialogComponent implements OnInit {
 
     games: Game[];
 
+    tournaments: Tournament[];
+
     groups: Groups[];
     constructor(
         public activeModal: NgbActiveModal,
@@ -33,6 +36,7 @@ export class PlayerDialogComponent implements OnInit {
         private playerService: PlayerService,
         private userService: UserService,
         private gameService: GameService,
+        private tournamentService: TournamentService,
         private groupsService: GroupsService,
         private eventManager: EventManager
     ) {
@@ -46,6 +50,8 @@ export class PlayerDialogComponent implements OnInit {
             (res: Response) => { this.users = res.json(); }, (res: Response) => this.onError(res.json()));
         this.gameService.query().subscribe(
             (res: Response) => { this.games = res.json(); }, (res: Response) => this.onError(res.json()));
+        this.tournamentService.query().subscribe(
+            (res: Response) => { this.tournaments = res.json(); }, (res: Response) => this.onError(res.json()));
         this.groupsService.query().subscribe(
             (res: Response) => { this.groups = res.json(); }, (res: Response) => this.onError(res.json()));
     }
@@ -86,6 +92,10 @@ export class PlayerDialogComponent implements OnInit {
     }
 
     trackGameById(index: number, item: Game) {
+        return item.id;
+    }
+
+    trackTournamentById(index: number, item: Tournament) {
         return item.id;
     }
 

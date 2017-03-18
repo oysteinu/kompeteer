@@ -5,6 +5,8 @@ import com.kompeteer.web.KompeteerApp;
 import com.kompeteer.web.domain.Player;
 import com.kompeteer.web.repository.PlayerRepository;
 import com.kompeteer.web.service.PlayerService;
+import com.kompeteer.web.service.dto.PlayerDTO;
+import com.kompeteer.web.service.mapper.PlayerMapper;
 import com.kompeteer.web.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -49,6 +51,9 @@ public class PlayerResourceIntTest {
 
     @Autowired
     private PlayerRepository playerRepository;
+
+    @Autowired
+    private PlayerMapper playerMapper;
 
     @Autowired
     private PlayerService playerService;
@@ -104,9 +109,10 @@ public class PlayerResourceIntTest {
         int databaseSizeBeforeCreate = playerRepository.findAll().size();
 
         // Create the Player
+        PlayerDTO playerDTO = playerMapper.playerToPlayerDTO(player);
         restPlayerMockMvc.perform(post("/api/players")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(player)))
+            .content(TestUtil.convertObjectToJsonBytes(playerDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Player in the database
@@ -125,11 +131,12 @@ public class PlayerResourceIntTest {
 
         // Create the Player with an existing ID
         player.setId(1L);
+        PlayerDTO playerDTO = playerMapper.playerToPlayerDTO(player);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restPlayerMockMvc.perform(post("/api/players")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(player)))
+            .content(TestUtil.convertObjectToJsonBytes(playerDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Alice in the database
@@ -145,10 +152,11 @@ public class PlayerResourceIntTest {
         player.setEmail(null);
 
         // Create the Player, which fails.
+        PlayerDTO playerDTO = playerMapper.playerToPlayerDTO(player);
 
         restPlayerMockMvc.perform(post("/api/players")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(player)))
+            .content(TestUtil.convertObjectToJsonBytes(playerDTO)))
             .andExpect(status().isBadRequest());
 
         List<Player> playerList = playerRepository.findAll();
@@ -199,8 +207,7 @@ public class PlayerResourceIntTest {
     @Transactional
     public void updatePlayer() throws Exception {
         // Initialize the database
-        playerService.save(player);
-
+        playerRepository.saveAndFlush(player);
         int databaseSizeBeforeUpdate = playerRepository.findAll().size();
 
         // Update the player
@@ -209,10 +216,11 @@ public class PlayerResourceIntTest {
             .firstName(UPDATED_FIRST_NAME)
             .lastName(UPDATED_LAST_NAME)
             .email(UPDATED_EMAIL);
+        PlayerDTO playerDTO = playerMapper.playerToPlayerDTO(updatedPlayer);
 
         restPlayerMockMvc.perform(put("/api/players")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(updatedPlayer)))
+            .content(TestUtil.convertObjectToJsonBytes(playerDTO)))
             .andExpect(status().isOk());
 
         // Validate the Player in the database
@@ -230,11 +238,12 @@ public class PlayerResourceIntTest {
         int databaseSizeBeforeUpdate = playerRepository.findAll().size();
 
         // Create the Player
+        PlayerDTO playerDTO = playerMapper.playerToPlayerDTO(player);
 
         // If the entity doesn't have an ID, it will be created instead of just being updated
         restPlayerMockMvc.perform(put("/api/players")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(player)))
+            .content(TestUtil.convertObjectToJsonBytes(playerDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Player in the database
@@ -246,8 +255,7 @@ public class PlayerResourceIntTest {
     @Transactional
     public void deletePlayer() throws Exception {
         // Initialize the database
-        playerService.save(player);
-
+        playerRepository.saveAndFlush(player);
         int databaseSizeBeforeDelete = playerRepository.findAll().size();
 
         // Get the player

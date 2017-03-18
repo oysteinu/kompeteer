@@ -21,6 +21,7 @@
             <th><span jhiTranslate="kompeteerApp.player.lastName">Last Name</span></th>
             <th><span jhiTranslate="kompeteerApp.player.email">Email</span></th>
             <th><span jhiTranslate="kompeteerApp.player.user">User</span></th>
+            <th><span jhiTranslate="kompeteerApp.player.tournament">Tournament</span></th>
             <th><span jhiTranslate="kompeteerApp.player.group">Group</span></th>
             <th></th>
             </tr>
@@ -32,7 +33,12 @@
                 <td>{{player.lastName}}</td>
                 <td>{{player.email}}</td>
                 <td>
-                    {{player.user?.id}}
+                    {{player.userId}}
+                </td>
+                <td>
+                    <span *ngFor="let tournament of player.tournaments; let last = last">
+                            <a class="form-control-static" [routerLink]="['../tournament', tournament?.id ]">{{tournament.id}}</a>{{last ? '' : ', '}}
+                        </span>
                 </td>
                 <td>
                     <span *ngFor="let group of player.groups; let last = last">

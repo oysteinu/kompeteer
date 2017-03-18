@@ -25,7 +25,7 @@ games: Game[];
         private eventManager: EventManager,
         private principal: Principal
     ) {
-        this.jhiLanguageService.setLocations(['game', 'gameResult']);
+        this.jhiLanguageService.setLocations(['game', 'gameStatus', 'gameResult']);
     }
 
     loadAll() {

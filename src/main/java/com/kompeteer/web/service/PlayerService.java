@@ -1,6 +1,6 @@
 package com.kompeteer.web.service;
 
-import com.kompeteer.web.domain.Player;
+import com.kompeteer.web.service.dto.PlayerDTO;
 import java.util.List;
 
 /**
@@ -11,17 +11,17 @@ public interface PlayerService {
     /**
      * Save a player.
      *
-     * @param player the entity to save
+     * @param playerDTO the entity to save
      * @return the persisted entity
      */
-    Player save(Player player);
+    PlayerDTO save(PlayerDTO playerDTO);
 
     /**
      *  Get all the players.
      *  
      *  @return the list of entities
      */
-    List<Player> findAll();
+    List<PlayerDTO> findAll();
 
     /**
      *  Get the "id" player.
@@ -29,7 +29,7 @@ public interface PlayerService {
      *  @param id the id of the entity
      *  @return the entity
      */
-    Player findOne(Long id);
+    PlayerDTO findOne(Long id);
 
     /**
      *  Delete the "id" player.

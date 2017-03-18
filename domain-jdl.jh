@@ -49,5 +49,5 @@ relationship ManyToMany {
 	Player{group} to Groups{player}
 }
 
-// Set service options to all except few
+dto * with mapstruct
 service all with serviceImpl

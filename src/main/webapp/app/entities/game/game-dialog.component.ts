@@ -9,6 +9,7 @@ import { Game } from './game.model';
 import { GamePopupService } from './game-popup.service';
 import { GameService } from './game.service';
 import { Player, PlayerService } from '../player';
+import { Tournament, TournamentService } from '../tournament';
 @Component({
     selector: 'jhi-game-dialog',
     templateUrl: './game-dialog.component.html'
@@ -20,15 +21,18 @@ export class GameDialogComponent implements OnInit {
     isSaving: boolean;
 
     players: Player[];
+
+    tournaments: Tournament[];
     constructor(
         public activeModal: NgbActiveModal,
         private jhiLanguageService: JhiLanguageService,
         private alertService: AlertService,
         private gameService: GameService,
         private playerService: PlayerService,
+        private tournamentService: TournamentService,
         private eventManager: EventManager
     ) {
-        this.jhiLanguageService.setLocations(['game', 'gameResult']);
+        this.jhiLanguageService.setLocations(['game', 'gameStatus', 'gameResult']);
     }
 
     ngOnInit() {
@@ -36,6 +40,8 @@ export class GameDialogComponent implements OnInit {
         this.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
         this.playerService.query().subscribe(
             (res: Response) => { this.players = res.json(); }, (res: Response) => this.onError(res.json()));
+        this.tournamentService.query().subscribe(
+            (res: Response) => { this.tournaments = res.json(); }, (res: Response) => this.onError(res.json()));
     }
     clear () {
         this.activeModal.dismiss('cancel');
@@ -70,6 +76,10 @@ export class GameDialogComponent implements OnInit {
     }
 
     trackPlayerById(index: number, item: Player) {
+        return item.id;
+    }
+
+    trackTournamentById(index: number, item: Tournament) {
         return item.id;
     }
 }

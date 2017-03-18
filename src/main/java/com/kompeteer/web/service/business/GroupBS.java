@@ -7,19 +7,30 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kompeteer.web.domain.Game;
 import com.kompeteer.web.domain.Groups;
 import com.kompeteer.web.domain.Player;
 import com.kompeteer.web.domain.app.PlayerRating;
 import com.kompeteer.web.domain.enumeration.GameResult;
+import com.kompeteer.web.repository.GroupsRepository;
 
-@Component
+@Service
+@Transactional
 public class GroupBS {
 	private double K = 32;
 
-	public Set<Game> getGames(Groups group) {
+	public final GroupsRepository groupsRepository;
+	
+	public GroupBS(final GroupsRepository groupsRepository) {
+		this.groupsRepository = groupsRepository;
+	}
+	
+	public Set<Game> getGames(long groupId) {
+		Groups group = groupsRepository.getOne(groupId);
+		
 		Set<Player> players = group.getPlayers();
 
 		Set<Game> games = new HashSet<>();
@@ -32,8 +43,8 @@ public class GroupBS {
 		return games;
 	}
 
-	public List<PlayerRating> getRatings(Groups group) {
-		Set<Game> games = getGames(group);
+	public List<PlayerRating> getRatings(long groupId) {
+		Set<Game> games = getGames(groupId);
 
 		Map<Long, PlayerRating> ratings = new HashMap<>();
 		

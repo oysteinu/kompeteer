@@ -3,12 +3,16 @@ package com.kompeteer.web.service.impl;
 import com.kompeteer.web.service.GroupsService;
 import com.kompeteer.web.domain.Groups;
 import com.kompeteer.web.repository.GroupsRepository;
+import com.kompeteer.web.service.dto.GroupsDTO;
+import com.kompeteer.web.service.mapper.GroupsMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Service Implementation for managing Groups.
@@ -21,20 +25,25 @@ public class GroupsServiceImpl implements GroupsService{
     
     private final GroupsRepository groupsRepository;
 
-    public GroupsServiceImpl(GroupsRepository groupsRepository) {
+    private final GroupsMapper groupsMapper;
+
+    public GroupsServiceImpl(GroupsRepository groupsRepository, GroupsMapper groupsMapper) {
         this.groupsRepository = groupsRepository;
+        this.groupsMapper = groupsMapper;
     }
 
     /**
      * Save a groups.
      *
-     * @param groups the entity to save
+     * @param groupsDTO the entity to save
      * @return the persisted entity
      */
     @Override
-    public Groups save(Groups groups) {
-        log.debug("Request to save Groups : {}", groups);
-        Groups result = groupsRepository.save(groups);
+    public GroupsDTO save(GroupsDTO groupsDTO) {
+        log.debug("Request to save Groups : {}", groupsDTO);
+        Groups groups = groupsMapper.groupsDTOToGroups(groupsDTO);
+        groups = groupsRepository.save(groups);
+        GroupsDTO result = groupsMapper.groupsToGroupsDTO(groups);
         return result;
     }
 
@@ -45,9 +54,11 @@ public class GroupsServiceImpl implements GroupsService{
      */
     @Override
     @Transactional(readOnly = true)
-    public List<Groups> findAll() {
+    public List<GroupsDTO> findAll() {
         log.debug("Request to get all Groups");
-        List<Groups> result = groupsRepository.findAll();
+        List<GroupsDTO> result = groupsRepository.findAll().stream()
+            .map(groupsMapper::groupsToGroupsDTO)
+            .collect(Collectors.toCollection(LinkedList::new));
 
         return result;
     }
@@ -60,10 +71,11 @@ public class GroupsServiceImpl implements GroupsService{
      */
     @Override
     @Transactional(readOnly = true)
-    public Groups findOne(Long id) {
+    public GroupsDTO findOne(Long id) {
         log.debug("Request to get Groups : {}", id);
         Groups groups = groupsRepository.findOne(id);
-        return groups;
+        GroupsDTO groupsDTO = groupsMapper.groupsToGroupsDTO(groups);
+        return groupsDTO;
     }
 
     /**
