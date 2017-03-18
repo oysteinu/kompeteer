@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.common.collect.Lists;
 import com.kompeteer.web.domain.Game;
 import com.kompeteer.web.domain.Groups;
 import com.kompeteer.web.domain.Player;
@@ -28,7 +29,7 @@ public class GroupBS {
 		this.groupsRepository = groupsRepository;
 	}
 	
-	public Set<Game> getGames(long groupId) {
+	public List<Game> getGames(long groupId) {
 		Groups group = groupsRepository.getOne(groupId);
 		
 		Set<Player> players = group.getPlayers();
@@ -40,11 +41,11 @@ public class GroupBS {
 					.collect(Collectors.toSet()));
 		}
 
-		return games;
+		return Lists.newArrayList(games);
 	}
 
 	public List<PlayerRating> getRatings(long groupId) {
-		Set<Game> games = getGames(groupId);
+		List<Game> games = getGames(groupId);
 
 		Map<Long, PlayerRating> ratings = new HashMap<>();
 		

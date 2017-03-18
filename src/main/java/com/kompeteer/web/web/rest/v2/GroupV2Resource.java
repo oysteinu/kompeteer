@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.codahale.metrics.annotation.Timed;
 import com.kompeteer.web.domain.Game;
 import com.kompeteer.web.domain.app.PlayerRating;
-import com.kompeteer.web.service.TournamentService;
 import com.kompeteer.web.service.business.GroupBS;
+import com.kompeteer.web.service.dto.GameDTO;
 import com.kompeteer.web.service.dto.GroupsDTO;
-import com.kompeteer.web.service.mapper.GroupsMapper;
+import com.kompeteer.web.service.mapper.GameMapper;
 
 @RestController
 @RequestMapping("/api/v2")
@@ -27,28 +27,26 @@ public class GroupV2Resource {
 	private final Logger log = LoggerFactory.getLogger(GroupV2Resource.class);
 	
 	private final GroupBS groupBS;
-	private final GroupsMapper groupsMapper;
+	private final GameMapper gameMapper;
 	
-	public GroupV2Resource(GroupBS groupBS, GroupsMapper groupsMapper) {
+	public GroupV2Resource(GroupBS groupBS, GameMapper gameMapper) {
 		this.groupBS = groupBS;
-		this.groupsMapper = groupsMapper;
+		this.gameMapper = gameMapper;
 	}
 
 	@GetMapping("/groups/{groupId}/games")
 	@Timed
-	public Set<GameDTO> getGames(@PathVariable("groupId") long groupId) throws URISyntaxException {
+	public List<GameDTO> getGames(@PathVariable("groupId") long groupId) throws URISyntaxException {
 
-		Set<Game> games = groupBS.getGames(groupId);
+		List<Game> games = groupBS.getGames(groupId);
 				
-		return groupBS.getGames(group);
+		return gameMapper.gamesToGameDTOs(games);
 	}
 	
 	@GetMapping("/groups/{groupId}/ratings")
 	@Timed
 	public List<PlayerRating> getRatings(@PathVariable("groupId") long groupId) throws URISyntaxException {
 
-		GroupsDTO group = groupsService.findOne(groupId); 
-				
-		return groupBS.getRatings(group);
+		return groupBS.getRatings(groupId);
 	}
 }
