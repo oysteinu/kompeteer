@@ -19,9 +19,9 @@ public class GameDTO implements Serializable {
 
     private GameResult result;
 
-    private Long whiteId;
+    private Long player1Id;
 
-    private Long blackId;
+    private Long player2Id;
 
     private Long tournamentId;
 
@@ -47,20 +47,20 @@ public class GameDTO implements Serializable {
         this.result = result;
     }
 
-    public Long getWhiteId() {
-        return whiteId;
+    public Long getPlayer1Id() {
+        return player1Id;
     }
 
-    public void setWhiteId(Long playerId) {
-        this.whiteId = playerId;
+    public void setPlayer1Id(Long playerId) {
+        this.player1Id = playerId;
     }
 
-    public Long getBlackId() {
-        return blackId;
+    public Long getPlayer2Id() {
+        return player2Id;
     }
 
-    public void setBlackId(Long playerId) {
-        this.blackId = playerId;
+    public void setPlayer2Id(Long playerId) {
+        this.player2Id = playerId;
     }
 
     public Long getTournamentId() {

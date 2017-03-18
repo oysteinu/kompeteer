@@ -19,8 +19,8 @@
             "lastName": "Last Name",
             "email": "Email",
             "user": "User",
-            "whiteGame": "White Game",
-            "blackGame": "Black Game",
+            "player1Game": "Player 1 Game",
+            "player2Game": "Player 2 Game",
             "tournament": "Tournament",
             "group": "Group"
         }

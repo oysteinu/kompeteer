@@ -3,13 +3,13 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "white",
+            "relationshipName": "player1",
             "otherEntityName": "player",
             "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "black",
+            "relationshipName": "player2",
             "otherEntityName": "player",
             "otherEntityField": "id"
         },
@@ -29,7 +29,7 @@
         {
             "fieldName": "result",
             "fieldType": "GameResult",
-            "fieldValues": "WHITE,BLACK,DRAW"
+            "fieldValues": "PLAYER1,PLAYER2,DRAW"
         }
     ],
     "changelogDate": "20170316143339",

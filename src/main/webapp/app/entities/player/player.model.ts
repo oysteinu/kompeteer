@@ -5,8 +5,8 @@ export class Player {
         public lastName?: string,
         public email?: string,
         public userId?: number,
-        public whiteGameId?: number,
-        public blackGameId?: number,
+        public player1GameId?: number,
+        public player2GameId?: number,
         public tournamentId?: number,
         public groupId?: number,
     ) {

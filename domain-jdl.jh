@@ -9,7 +9,7 @@ entity Groups {
 }
 
 enum GameResult {
-    WHITE, BLACK, DRAW
+    PLAYER1, PLAYER2, DRAW
 }
 
 enum GameStatus {
@@ -30,11 +30,11 @@ relationship OneToOne {
 }
 
 relationship OneToMany {
-	Player{whiteGame} to Game{white}	
+	Player{player1Game} to Game{player1}	
 }
 
 relationship OneToMany {
-	Player{blackGame} to Game{black}	
+	Player{player2Game} to Game{player2}	
 }
 
 relationship OneToMany {

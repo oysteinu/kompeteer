@@ -19,8 +19,8 @@
             <th><span jhiTranslate="global.field.id">ID</span></th>
             <th><span jhiTranslate="kompeteerApp.game.status">Status</span></th>
             <th><span jhiTranslate="kompeteerApp.game.result">Result</span></th>
-            <th><span jhiTranslate="kompeteerApp.game.white">White</span></th>
-            <th><span jhiTranslate="kompeteerApp.game.black">Black</span></th>
+            <th><span jhiTranslate="kompeteerApp.game.player1">Player 1</span></th>
+            <th><span jhiTranslate="kompeteerApp.game.player2">Player 2</span></th>
             <th><span jhiTranslate="kompeteerApp.game.tournament">Tournament</span></th>
             <th></th>
             </tr>
@@ -31,13 +31,13 @@
                 <td jhiTranslate="{{'kompeteerApp.GameStatus.' + game.status}}">{{game.status}}</td>
                 <td jhiTranslate="{{'kompeteerApp.GameResult.' + game.result}}">{{game.result}}</td>
                 <td>
-                    <div *ngIf="game.whiteId">
-                        <a [routerLink]="['../player', game.whiteId  ]" >{{game.whiteId}}</a>
+                    <div *ngIf="game.player1Id">
+                        <a [routerLink]="['../player', game.player1Id  ]" >{{game.player1Id}}</a>
                     </div>
                 </td>
                 <td>
-                    <div *ngIf="game.blackId">
-                        <a [routerLink]="['../player', game.blackId  ]" >{{game.blackId}}</a>
+                    <div *ngIf="game.player2Id">
+                        <a [routerLink]="['../player', game.player2Id  ]" >{{game.player2Id}}</a>
                     </div>
                 </td>
                 <td>

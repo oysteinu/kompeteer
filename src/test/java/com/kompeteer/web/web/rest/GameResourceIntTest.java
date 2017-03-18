@@ -45,8 +45,8 @@ public class GameResourceIntTest {
     private static final GameStatus DEFAULT_STATUS = GameStatus.PENDING;
     private static final GameStatus UPDATED_STATUS = GameStatus.COMPLETE;
 
-    private static final GameResult DEFAULT_RESULT = GameResult.WHITE;
-    private static final GameResult UPDATED_RESULT = GameResult.BLACK;
+    private static final GameResult DEFAULT_RESULT = GameResult.PLAYER1;
+    private static final GameResult UPDATED_RESULT = GameResult.PLAYER2;
 
     @Autowired
     private GameRepository gameRepository;

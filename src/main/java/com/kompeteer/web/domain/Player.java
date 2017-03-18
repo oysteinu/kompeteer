@@ -40,15 +40,15 @@ public class Player implements Serializable {
     @JoinColumn(unique = true)
     private User user;
 
-    @OneToMany(mappedBy = "white")
+    @OneToMany(mappedBy = "player1")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Game> whiteGames = new HashSet<>();
+    private Set<Game> player1Games = new HashSet<>();
 
-    @OneToMany(mappedBy = "black")
+    @OneToMany(mappedBy = "player2")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Game> blackGames = new HashSet<>();
+    private Set<Game> player2Games = new HashSet<>();
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -124,54 +124,54 @@ public class Player implements Serializable {
         this.user = user;
     }
 
-    public Set<Game> getWhiteGames() {
-        return whiteGames;
+    public Set<Game> getPlayer1Games() {
+        return player1Games;
     }
 
-    public Player whiteGames(Set<Game> games) {
-        this.whiteGames = games;
+    public Player player1Games(Set<Game> games) {
+        this.player1Games = games;
         return this;
     }
 
-    public Player addWhiteGame(Game game) {
-        this.whiteGames.add(game);
-        game.setWhite(this);
+    public Player addPlayer1Game(Game game) {
+        this.player1Games.add(game);
+        game.setPlayer1(this);
         return this;
     }
 
-    public Player removeWhiteGame(Game game) {
-        this.whiteGames.remove(game);
-        game.setWhite(null);
+    public Player removePlayer1Game(Game game) {
+        this.player1Games.remove(game);
+        game.setPlayer1(null);
         return this;
     }
 
-    public void setWhiteGames(Set<Game> games) {
-        this.whiteGames = games;
+    public void setPlayer1Games(Set<Game> games) {
+        this.player1Games = games;
     }
 
-    public Set<Game> getBlackGames() {
-        return blackGames;
+    public Set<Game> getPlayer2Games() {
+        return player2Games;
     }
 
-    public Player blackGames(Set<Game> games) {
-        this.blackGames = games;
+    public Player player2Games(Set<Game> games) {
+        this.player2Games = games;
         return this;
     }
 
-    public Player addBlackGame(Game game) {
-        this.blackGames.add(game);
-        game.setBlack(this);
+    public Player addPlayer2Game(Game game) {
+        this.player2Games.add(game);
+        game.setPlayer2(this);
         return this;
     }
 
-    public Player removeBlackGame(Game game) {
-        this.blackGames.remove(game);
-        game.setBlack(null);
+    public Player removePlayer2Game(Game game) {
+        this.player2Games.remove(game);
+        game.setPlayer2(null);
         return this;
     }
 
-    public void setBlackGames(Set<Game> games) {
-        this.blackGames = games;
+    public void setPlayer2Games(Set<Game> games) {
+        this.player2Games = games;
     }
 
     public Set<Tournament> getTournaments() {

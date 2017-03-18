@@ -18,8 +18,8 @@ public interface PlayerMapper {
     List<PlayerDTO> playersToPlayerDTOs(List<Player> players);
 
     @Mapping(source = "userId", target = "user")
-    @Mapping(target = "whiteGames", ignore = true)
-    @Mapping(target = "blackGames", ignore = true)
+    @Mapping(target = "player1Games", ignore = true)
+    @Mapping(target = "player2Games", ignore = true)
     Player playerDTOToPlayer(PlayerDTO playerDTO);
 
     List<Player> playerDTOsToPlayers(List<PlayerDTO> playerDTOs);

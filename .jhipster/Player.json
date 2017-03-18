@@ -11,15 +11,15 @@
         },
         {
             "relationshipType": "one-to-many",
-            "relationshipName": "whiteGame",
+            "relationshipName": "player1Game",
             "otherEntityName": "game",
-            "otherEntityRelationshipName": "white"
+            "otherEntityRelationshipName": "player1"
         },
         {
             "relationshipType": "one-to-many",
-            "relationshipName": "blackGame",
+            "relationshipName": "player2Game",
             "otherEntityName": "game",
-            "otherEntityRelationshipName": "black"
+            "otherEntityRelationshipName": "player2"
         },
         {
             "relationshipType": "many-to-many",

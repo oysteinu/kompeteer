@@ -24,22 +24,22 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="kompeteerApp.game.result" for="field_result">Result</label>
             <select class="form-control" name="result" [(ngModel)]="game.result" id="field_result" >
-                <option value="WHITE" jhiTranslate="kompeteerApp.GameResult.WHITE">WHITE</option>
-                <option value="BLACK" jhiTranslate="kompeteerApp.GameResult.BLACK">BLACK</option>
+                <option value="PLAYER1" jhiTranslate="kompeteerApp.GameResult.PLAYER1">PLAYER1</option>
+                <option value="PLAYER2" jhiTranslate="kompeteerApp.GameResult.PLAYER2">PLAYER2</option>
                 <option value="DRAW" jhiTranslate="kompeteerApp.GameResult.DRAW">DRAW</option>
             </select>
         </div>
 
         <div class="form-group">
-            <label jhiTranslate="kompeteerApp.game.white" for="field_white">White</label>
-            <select class="form-control" id="field_white" name="white" [(ngModel)]="game.whiteId" >
+            <label jhiTranslate="kompeteerApp.game.player1" for="field_player1">Player 1</label>
+            <select class="form-control" id="field_player1" name="player1" [(ngModel)]="game.player1Id" >
                 <option [ngValue]="null"></option>
                 <option [ngValue]="playerOption.id" *ngFor="let playerOption of players; trackBy: trackPlayerById">{{playerOption.id}}</option>
             </select>
         </div>
         <div class="form-group">
-            <label jhiTranslate="kompeteerApp.game.black" for="field_black">Black</label>
-            <select class="form-control" id="field_black" name="black" [(ngModel)]="game.blackId" >
+            <label jhiTranslate="kompeteerApp.game.player2" for="field_player2">Player 2</label>
+            <select class="form-control" id="field_player2" name="player2" [(ngModel)]="game.player2Id" >
                 <option [ngValue]="null"></option>
                 <option [ngValue]="playerOption.id" *ngFor="let playerOption of players; trackBy: trackPlayerById">{{playerOption.id}}</option>
             </select>

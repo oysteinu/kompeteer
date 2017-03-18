@@ -37,7 +37,7 @@ public class GroupBS {
 		Set<Game> games = new HashSet<>();
 
 		for (Player player : players) {
-			games.addAll(player.getWhiteGames().stream().filter(g -> players.contains(g.getBlack()))
+			games.addAll(player.getPlayer1Games().stream().filter(g -> players.contains(g.getPlayer2()))
 					.collect(Collectors.toSet()));
 		}
 
@@ -50,19 +50,19 @@ public class GroupBS {
 		Map<Long, PlayerRating> ratings = new HashMap<>();
 		
 		for (Game game : games) {
-			Player white = game.getWhite();
-			Player black = game.getBlack();
+			Player player1 = game.getPlayer1();
+			Player player2 = game.getPlayer2();
 			
-			PlayerRating playerRating1 = ratings.getOrDefault(white.getId(), createInitial(white));
-			PlayerRating playerRating2 = ratings.getOrDefault(black.getId(), createInitial(black));
+			PlayerRating playerRating1 = ratings.getOrDefault(player1.getId(), createInitial(player1));
+			PlayerRating playerRating2 = ratings.getOrDefault(player2.getId(), createInitial(player2));
 			
 			int[] adjustments = adjust(playerRating1.getRating(), playerRating2.getRating(), game.getResult());
 			
 			playerRating1.adjust(adjustments[0]);
 			playerRating2.adjust(adjustments[1]);
 			
-			ratings.put(white.getId(), playerRating1);
-			ratings.put(black.getId(), playerRating2);
+			ratings.put(player1.getId(), playerRating1);
+			ratings.put(player2.getId(), playerRating2);
 		}
 		
 		return ratings.values()
@@ -86,8 +86,8 @@ public class GroupBS {
 		double s2 = 0.5;
 		
 		if (GameResult.DRAW != result) {
-			s1 = GameResult.WHITE == result ? 1 : 0;
-			s2 = GameResult.WHITE == result ? 0 : 1;
+			s1 = GameResult.PLAYER1 == result ? 1 : 0;
+			s2 = GameResult.PLAYER1 == result ? 0 : 1;
 		}
 		
 		double adjustment1 = K * (s1 - e1);

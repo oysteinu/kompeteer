@@ -12,15 +12,15 @@ import java.util.List;
 @Mapper(componentModel = "spring", uses = {})
 public interface GameMapper {
 
-    @Mapping(source = "white.id", target = "whiteId")
-    @Mapping(source = "black.id", target = "blackId")
+    @Mapping(source = "player1.id", target = "player1Id")
+    @Mapping(source = "player2.id", target = "player2Id")
     @Mapping(source = "tournament.id", target = "tournamentId")
     GameDTO gameToGameDTO(Game game);
 
     List<GameDTO> gamesToGameDTOs(List<Game> games);
 
-    @Mapping(source = "whiteId", target = "white")
-    @Mapping(source = "blackId", target = "black")
+    @Mapping(source = "player1Id", target = "player1")
+    @Mapping(source = "player2Id", target = "player2")
     @Mapping(source = "tournamentId", target = "tournament")
     Game gameDTOToGame(GameDTO gameDTO);
 

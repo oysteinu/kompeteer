@@ -6,8 +6,8 @@ const enum GameStatus {
 };
 
 const enum GameResult {
-    'WHITE',
-    'BLACK',
+    'PLAYER1',
+    'PLAYER2',
     'DRAW'
 
 };
@@ -16,8 +16,8 @@ export class Game {
         public id?: number,
         public status?: GameStatus,
         public result?: GameResult,
-        public whiteId?: number,
-        public blackId?: number,
+        public player1Id?: number,
+        public player2Id?: number,
         public tournamentId?: number,
     ) {
     }

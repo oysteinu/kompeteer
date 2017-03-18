@@ -12,16 +12,16 @@
         <dd>
             <span jhiTranslate="{{'kompeteerApp.GameResult.' + game.result}}">{{game.result}}</span>
         </dd>
-        <dt><span jhiTranslate="kompeteerApp.game.white">White</span></dt>
+        <dt><span jhiTranslate="kompeteerApp.game.player1">Player 1</span></dt>
         <dd>
-            <div *ngIf="game.whiteId">
-                <a [routerLink]="['/player', game.whiteId]">{{game.whiteId}}</a>
+            <div *ngIf="game.player1Id">
+                <a [routerLink]="['/player', game.player1Id]">{{game.player1Id}}</a>
             </div>
         </dd>
-        <dt><span jhiTranslate="kompeteerApp.game.black">Black</span></dt>
+        <dt><span jhiTranslate="kompeteerApp.game.player2">Player 2</span></dt>
         <dd>
-            <div *ngIf="game.blackId">
-                <a [routerLink]="['/player', game.blackId]">{{game.blackId}}</a>
+            <div *ngIf="game.player2Id">
+                <a [routerLink]="['/player', game.player2Id]">{{game.player2Id}}</a>
             </div>
         </dd>
         <dt><span jhiTranslate="kompeteerApp.game.tournament">Tournament</span></dt>

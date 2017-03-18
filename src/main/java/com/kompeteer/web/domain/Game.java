@@ -35,10 +35,10 @@ public class Game implements Serializable {
     private GameResult result;
 
     @ManyToOne
-    private Player white;
+    private Player player1;
 
     @ManyToOne
-    private Player black;
+    private Player player2;
 
     @ManyToOne
     private Tournament tournament;
@@ -77,30 +77,30 @@ public class Game implements Serializable {
         this.result = result;
     }
 
-    public Player getWhite() {
-        return white;
+    public Player getPlayer1() {
+        return player1;
     }
 
-    public Game white(Player player) {
-        this.white = player;
+    public Game player1(Player player) {
+        this.player1 = player;
         return this;
     }
 
-    public void setWhite(Player player) {
-        this.white = player;
+    public void setPlayer1(Player player) {
+        this.player1 = player;
     }
 
-    public Player getBlack() {
-        return black;
+    public Player getPlayer2() {
+        return player2;
     }
 
-    public Game black(Player player) {
-        this.black = player;
+    public Game player2(Player player) {
+        this.player2 = player;
         return this;
     }
 
-    public void setBlack(Player player) {
-        this.black = player;
+    public void setPlayer2(Player player) {
+        this.player2 = player;
     }
 
     public Tournament getTournament() {
