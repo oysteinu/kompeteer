@@ -29,6 +29,10 @@ public class GroupBS {
 		this.groupsRepository = groupsRepository;
 	}
 	
+	public Groups getGroup(long groupId) {
+		return groupsRepository.getOne(groupId);
+	}
+	
 	public List<Game> getGames(long groupId) {
 		Groups group = groupsRepository.getOne(groupId);
 		

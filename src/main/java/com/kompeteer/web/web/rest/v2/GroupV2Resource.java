@@ -2,7 +2,6 @@ package com.kompeteer.web.web.rest.v2;
 
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +16,6 @@ import com.kompeteer.web.domain.Game;
 import com.kompeteer.web.domain.app.PlayerRating;
 import com.kompeteer.web.service.business.GroupBS;
 import com.kompeteer.web.service.dto.GameDTO;
-import com.kompeteer.web.service.dto.GroupsDTO;
 import com.kompeteer.web.service.mapper.GameMapper;
 
 @RestController
