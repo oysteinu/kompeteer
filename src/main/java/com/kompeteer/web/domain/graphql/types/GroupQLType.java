@@ -31,7 +31,7 @@ public class GroupQLType {
 			         .dataFetcher(env -> {
 			        	 Groups group = (Groups) env.getSource();
 			        	 
-			        	 return getGroupBS(env).getGames(group.getId());
+			        	 return getGroupBS(env).getGames(group);
 			         })
 			         .build())
 		  .build();

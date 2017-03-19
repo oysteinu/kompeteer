@@ -36,6 +36,10 @@ public class GroupBS {
 	public List<Game> getGames(long groupId) {
 		Groups group = groupsRepository.getOne(groupId);
 		
+		return getGames(group);
+	}
+	
+	public List<Game> getGames(Groups group) {
 		Set<Player> players = group.getPlayers();
 
 		Set<Game> games = new HashSet<>();
