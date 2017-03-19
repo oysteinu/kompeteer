@@ -23,6 +23,12 @@ public class PlayerBS {
 	public Player getPlayer(long playerId) {
 		return playerRepository.getOne(playerId);
 	}
+	
+	public List<Game> getGames(long playerId) {
+		Player player = getPlayer(playerId);
+		
+		return getGames(player);
+	}
 
 	public List<Game> getGames(Player player) {
 		Set<Game> games = player.getPlayer1Games();

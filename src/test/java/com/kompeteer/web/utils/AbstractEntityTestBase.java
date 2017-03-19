@@ -1,5 +1,7 @@
 package com.kompeteer.web.utils;
 
+import static org.mockito.Mockito.when;
+
 import org.mockito.Mock;
 
 import com.kompeteer.web.domain.Game;
@@ -22,6 +24,8 @@ public class AbstractEntityTestBase {
 		group.setId(id);
 		group.setName(name);
 		
+		when(mockGroupsRepository.getOne(id)).thenReturn(group);
+		
 		return group;
 	}
 
@@ -31,6 +35,8 @@ public class AbstractEntityTestBase {
 		player.setId(id);
 		player.setFirstName(firstName);
 		player.setLastName(lastName);
+		
+		when(mockPlayerRepository.getOne(id)).thenReturn(player);
 
 		return player;
 	}

@@ -1,35 +1,25 @@
 package com.kompeteer.web.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
 
 import java.util.List;
 import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.kompeteer.web.domain.Game;
 import com.kompeteer.web.domain.Groups;
 import com.kompeteer.web.domain.Player;
 import com.kompeteer.web.domain.enumeration.GameResult;
-import com.kompeteer.web.repository.GroupsRepository;
-import com.kompeteer.web.repository.PlayerRepository;
 import com.kompeteer.web.service.business.GroupBS;
 import com.kompeteer.web.service.business.PlayerBS;
+import com.kompeteer.web.utils.AbstractEntityTestBase;
 
 import graphql.ExecutionResult;
 
-public class GraphQLServiceTest {
+public class GraphQLServiceTest extends AbstractEntityTestBase {
 	private GraphQLService service;
-
-	@Mock
-	private PlayerRepository mockPlayerRepository;
-	
-	@Mock
-	private GroupsRepository mockGroupsRepository;
 
 	@Before
 	public void beforeEachTest() throws Exception {
@@ -43,12 +33,8 @@ public class GraphQLServiceTest {
 		Player player2 = player(2, "Jon Ludvig", "Hammer");
 		player2.addGroup(group1);
 		
-		Game game1 = game(1, player1, player2, GameResult.PLAYER1);
-		Game game2 = game(2, player1, player2, GameResult.DRAW);
-		
-		when(mockPlayerRepository.getOne(1L)).thenReturn(player1);
-		when(mockPlayerRepository.getOne(2L)).thenReturn(player2);
-		when(mockGroupsRepository.getOne(1L)).thenReturn(group1);
+		game(1, player1, player2, GameResult.PLAYER1);
+		game(2, player1, player2, GameResult.DRAW);
 
 		PlayerBS playerBS = new PlayerBS(mockPlayerRepository);
 		GroupBS groupsBS = new GroupBS(mockGroupsRepository);
@@ -83,7 +69,5 @@ public class GraphQLServiceTest {
 		System.out.println(result.getErrors());
 		
 		System.out.println(result.getData());
-	}
-	
-	
+	}	
 }

@@ -33,6 +33,12 @@ public class GroupBS {
 		return groupsRepository.getOne(groupId);
 	}
 	
+	public List<Player> getPlayers(long groupId) {
+		Groups group = getGroup(groupId);
+		
+		return getPlayers(group);
+	}
+	
 	public List<Player> getPlayers(Groups group) {
 		Set<Player> players = group.getPlayers();
 		
