@@ -6,6 +6,7 @@ import static graphql.schema.GraphQLEnumType.newEnum;
 import static graphql.schema.GraphQLFieldDefinition.newFieldDefinition;
 import static graphql.schema.GraphQLObjectType.newObject;
 
+import com.kompeteer.web.domain.Game;
 import com.kompeteer.web.domain.enumeration.GameResult;
 
 import graphql.schema.GraphQLEnumType;
@@ -25,19 +26,37 @@ public class GameQLType {
 		  .name("game")
 		  .field(newFieldDefinition()
 		         .name("id")
+		         .description("ID of the group")
 		         .type(GraphQLLong)
 		         .build())
 		  .field(newFieldDefinition()
 		         .name("player1")
+		         .description("Player #1 of the game (white player in chess")
 		         .type(new GraphQLTypeReference(PLAYER_TYPE))
 		         .build())
 		  .field(newFieldDefinition()
 		         .name("player2")
+		         .description("Player #2 of the game (black player in chess")
 		         .type(new GraphQLTypeReference(PLAYER_TYPE))
 		         .build())
 		  .field(newFieldDefinition()
 		         .name("result")
+		         .description("Result of the game")
 		         .type(GameResultEnum)
 		         .build())
+		  .field(newFieldDefinition()
+			         .name("winner")
+			         .description("Winner of the game")
+			         .type(new GraphQLTypeReference(PLAYER_TYPE))
+			         .dataFetcher(env -> {
+			        	 Game game = (Game) env.getSource();
+			        	 
+			        	 if (GameResult.DRAW == game.getResult()) {
+			        		 return null;
+			        	 } else {
+			        		 return GameResult.PLAYER1 == game.getResult() ? game.getPlayer1() : game.getPlayer2();
+			        	 }
+			         })
+			         .build())
 		  .build();
 }

@@ -44,7 +44,6 @@ public class GroupV2Resource {
 	@GetMapping("/groups/{groupId}/ratings")
 	@Timed
 	public List<PlayerRating> getRatings(@PathVariable("groupId") long groupId) throws URISyntaxException {
-
 		return groupBS.getRatings(groupId);
 	}
 }

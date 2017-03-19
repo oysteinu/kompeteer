@@ -85,36 +85,5 @@ public class GraphQLServiceTest {
 		System.out.println(result.getData());
 	}
 	
-	private static Groups group(long id, String name) {
-		Groups group = new Groups();
-		
-		group.setId(id);
-		group.setName(name);
-		
-		return group;
-	}
-
-	private static Player player(long id, String firstName, String lastName) {
-		Player player = new Player();
-
-		player.setId(id);
-		player.setFirstName(firstName);
-		player.setLastName(lastName);
-
-		return player;
-	}
 	
-	private static Game game(long id, Player player1, Player player2, GameResult result) {
-		Game game = new Game();
-		
-		game.setId(id);
-		game.setPlayer1(player1);
-		game.setPlayer2(player2);
-		game.setResult(result);
-		
-		player1.addPlayer1Game(game);
-		player2.addPlayer2Game(game);
-		
-		return game;
-	}
 }

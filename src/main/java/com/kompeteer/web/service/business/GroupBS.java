@@ -33,6 +33,12 @@ public class GroupBS {
 		return groupsRepository.getOne(groupId);
 	}
 	
+	public List<Player> getPlayers(Groups group) {
+		Set<Player> players = group.getPlayers();
+		
+		return Lists.newArrayList(players);
+	}
+	
 	public List<Game> getGames(long groupId) {
 		Groups group = groupsRepository.getOne(groupId);
 		
@@ -51,10 +57,20 @@ public class GroupBS {
 
 		return Lists.newArrayList(games);
 	}
-
+	
 	public List<PlayerRating> getRatings(long groupId) {
 		List<Game> games = getGames(groupId);
 
+		return getRatings(games);
+	}
+	
+	public List<PlayerRating> getRatings(Groups group) {
+		List<Game> games = getGames(group);
+
+		return getRatings(games);
+	}
+
+	public List<PlayerRating> getRatings(List<Game> games) {
 		Map<Long, PlayerRating> ratings = new HashMap<>();
 		
 		for (Game game : games) {
