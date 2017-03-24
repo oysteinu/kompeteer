@@ -1,18 +1,18 @@
 package com.kompeteer.web.domain.graphql;
 
+import static com.kompeteer.web.domain.graphql.types.GameQLInputType.createGame;
+import static com.kompeteer.web.domain.graphql.types.GameQLInputType.updateGame;
+import static com.kompeteer.web.domain.graphql.types.GameQLInputType.deleteGame;
 import static com.kompeteer.web.domain.graphql.types.GroupQLType.GroupType;
 import static com.kompeteer.web.domain.graphql.types.PlayerQLType.PlayerType;
+import static com.kompeteer.web.domain.graphql.utils.GraphQLResources.getGroupBS;
+import static com.kompeteer.web.domain.graphql.utils.GraphQLResources.getPlayerBS;
 import static graphql.Scalars.GraphQLLong;
 import static graphql.schema.GraphQLArgument.newArgument;
 import static graphql.schema.GraphQLFieldDefinition.newFieldDefinition;
 import static graphql.schema.GraphQLObjectType.newObject;
 import static graphql.schema.GraphQLSchema.newSchema;
 
-import com.kompeteer.web.service.GraphQLService;
-import com.kompeteer.web.service.business.GroupBS;
-import com.kompeteer.web.service.business.PlayerBS;
-
-import graphql.schema.DataFetchingEnvironment;
 import graphql.schema.GraphQLFieldDefinition.Builder;
 import graphql.schema.GraphQLNonNull;
 import graphql.schema.GraphQLObjectType;
@@ -31,8 +31,9 @@ public class KompeteerGraphQLSchema {
 	
 	public GraphQLSchema createSchema() {
 		return newSchema()				
-				.query(createQueryType())
-				.build();
+			.query(createQueryType())
+			.mutation(createMutationType())
+			.build();
 	}
 	
 	private GraphQLObjectType createQueryType() {
@@ -43,7 +44,16 @@ public class KompeteerGraphQLSchema {
 	        .build();
 	}
 	
-	private Builder playerQuery() {
+	private GraphQLObjectType createMutationType() {
+		return newObject()
+	        .name("mutation")
+	        .field(createGame)
+	        .field(updateGame)
+	        .field(deleteGame)
+	        .build();
+	}
+	
+	private Builder playerQuery() { 
 		return newFieldDefinition()
             .name("player")
             .type(PlayerType)
@@ -70,16 +80,4 @@ public class KompeteerGraphQLSchema {
             	return getGroupBS(env).getGroup(groupId);
             });
 	}
-	
-	public static PlayerBS getPlayerBS(final DataFetchingEnvironment env) {
-		return context(env).getPlayerBS();
-	}
-	
-	public static GroupBS getGroupBS(final DataFetchingEnvironment env) {
-		return context(env).getGroupBS();
-	}
-	
-	public static GraphQLService context(final DataFetchingEnvironment env) {
-		return (GraphQLService) env.getSource();
-	} 
 }

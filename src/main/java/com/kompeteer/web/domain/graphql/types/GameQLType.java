@@ -8,6 +8,7 @@ import static graphql.schema.GraphQLObjectType.newObject;
 
 import com.kompeteer.web.domain.Game;
 import com.kompeteer.web.domain.enumeration.GameResult;
+import com.kompeteer.web.domain.enumeration.GameStatus;
 
 import graphql.schema.GraphQLEnumType;
 import graphql.schema.GraphQLObjectType;
@@ -22,41 +23,53 @@ public class GameQLType {
 	    .value(GameResult.DRAW.name(), GameResult.DRAW, "Game was drawn")
 	    .build();
 	
+	public static GraphQLEnumType GameStatusEnum = newEnum()
+		    .name("GameStatus")
+		    .description("Result of a game")
+		    .value(GameStatus.COMPLETE.name(), GameStatus.COMPLETE, "Game is complete")
+		    .value(GameStatus.PENDING.name(), GameStatus.PENDING, "Game is not complete")
+		    .build();
+	
 	public static GraphQLObjectType GameType = newObject()
 		  .name("game")
 		  .field(newFieldDefinition()
-		         .name("id")
-		         .description("ID of the group")
-		         .type(GraphQLLong)
-		         .build())
+	         .name("id")
+	         .description("ID of the game")
+	         .type(GraphQLLong)
+	         .build())
 		  .field(newFieldDefinition()
-		         .name("player1")
-		         .description("Player #1 of the game (white player in chess")
-		         .type(new GraphQLTypeReference(PLAYER_TYPE))
-		         .build())
+	         .name("status")
+	         .description("Status of the game (COMPLETE or PENDING)")
+	         .type(GameStatusEnum)
+	         .build())
 		  .field(newFieldDefinition()
-		         .name("player2")
-		         .description("Player #2 of the game (black player in chess")
-		         .type(new GraphQLTypeReference(PLAYER_TYPE))
-		         .build())
+	         .name("player1")
+	         .description("Player #1 of the game (white player in chess")
+	         .type(new GraphQLTypeReference(PLAYER_TYPE))
+	         .build())
 		  .field(newFieldDefinition()
-		         .name("result")
-		         .description("Result of the game")
-		         .type(GameResultEnum)
-		         .build())
+	         .name("player2")
+	         .description("Player #2 of the game (black player in chess")
+	         .type(new GraphQLTypeReference(PLAYER_TYPE))
+	         .build())
 		  .field(newFieldDefinition()
-			         .name("winner")
-			         .description("Winner of the game")
-			         .type(new GraphQLTypeReference(PLAYER_TYPE))
-			         .dataFetcher(env -> {
-			        	 Game game = (Game) env.getSource();
-			        	 
-			        	 if (GameResult.DRAW == game.getResult()) {
-			        		 return null;
-			        	 } else {
-			        		 return GameResult.PLAYER1 == game.getResult() ? game.getPlayer1() : game.getPlayer2();
-			        	 }
-			         })
-			         .build())
+	         .name("result")
+	         .description("Result of the game")
+	         .type(GameResultEnum)
+	         .build())
+		  .field(newFieldDefinition()
+	         .name("winner")
+	         .description("Winner of the game")
+	         .type(new GraphQLTypeReference(PLAYER_TYPE))
+	         .dataFetcher(env -> {
+	        	 Game game = (Game) env.getSource();
+	        	 
+	        	 if (GameResult.DRAW == game.getResult()) {
+	        		 return null;
+	        	 } else {
+	        		 return GameResult.PLAYER1 == game.getResult() ? game.getPlayer1() : game.getPlayer2();
+	        	 }
+	         })
+	         .build())
 		  .build();
 }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kompeteer.web.domain.graphql.KompeteerGraphQLSchema;
+import com.kompeteer.web.service.business.GameBS;
 import com.kompeteer.web.service.business.GroupBS;
 import com.kompeteer.web.service.business.PlayerBS;
 
@@ -16,16 +17,19 @@ public class GraphQLService {
 	
 	private final PlayerBS playerBS;
 	private final GroupBS groupBS;
-
+	private final GameBS gameBS;
+	
 	@Autowired
 	public GraphQLService(
 			PlayerBS playerBS,
-			GroupBS groupBS) throws Exception {
+			GroupBS groupBS,
+			GameBS gameBS) throws Exception {
 		
 		graphql = new GraphQL(new KompeteerGraphQLSchema().getSchema());
 		
 		this.playerBS = playerBS;
 		this.groupBS = groupBS;
+		this.gameBS = gameBS;
 	}
 
 	public ExecutionResult query(String query) {
@@ -40,5 +44,9 @@ public class GraphQLService {
 	
 	public GroupBS getGroupBS() {
 		return groupBS;
+	}
+	
+	public GameBS getGameBS() {
+		return gameBS;
 	}
 }

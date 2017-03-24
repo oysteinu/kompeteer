@@ -8,8 +8,10 @@ import com.kompeteer.web.domain.Game;
 import com.kompeteer.web.domain.Groups;
 import com.kompeteer.web.domain.Player;
 import com.kompeteer.web.domain.enumeration.GameResult;
+import com.kompeteer.web.repository.GameRepository;
 import com.kompeteer.web.repository.GroupsRepository;
 import com.kompeteer.web.repository.PlayerRepository;
+import com.kompeteer.web.service.GameService;
 
 public class AbstractEntityTestBase {
 	@Mock
@@ -17,6 +19,12 @@ public class AbstractEntityTestBase {
 	
 	@Mock
 	protected GroupsRepository mockGroupsRepository;
+	
+	@Mock
+	protected GameService mockGamesService;
+	
+	@Mock
+	protected GameRepository mockGameRepository;
 	
 	protected Groups group(long id, String name) {
 		Groups group = new Groups();
