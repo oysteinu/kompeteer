@@ -117,6 +117,16 @@ public class GraphQLServiceITest {
 		assertThat(player3.getPlayer2Games().size()).isEqualTo(0);
 	}
 	
+	@Test
+	public void get_player_from_current_user() {
+		String query = "query { me { player { firstName } }";
+		
+		ExecutionResult result = service.query(query);		
+		Map data = (Map) result.getData();
+		
+		String s = "";
+	}
+	
 	private Map<String, Object> getGameData(String query) {
 		ExecutionResult result = service.query(query);		
 		Map data = (Map) result.getData();

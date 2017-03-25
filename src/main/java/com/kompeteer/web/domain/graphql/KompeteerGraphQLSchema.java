@@ -1,8 +1,8 @@
 package com.kompeteer.web.domain.graphql;
 
 import static com.kompeteer.web.domain.graphql.types.GameQLInputType.createGame;
-import static com.kompeteer.web.domain.graphql.types.GameQLInputType.updateGame;
 import static com.kompeteer.web.domain.graphql.types.GameQLInputType.deleteGame;
+import static com.kompeteer.web.domain.graphql.types.GameQLInputType.updateGame;
 import static com.kompeteer.web.domain.graphql.types.GroupQLType.GroupType;
 import static com.kompeteer.web.domain.graphql.types.PlayerQLType.PlayerType;
 import static com.kompeteer.web.domain.graphql.utils.GraphQLResources.getGroupBS;
@@ -12,6 +12,9 @@ import static graphql.schema.GraphQLArgument.newArgument;
 import static graphql.schema.GraphQLFieldDefinition.newFieldDefinition;
 import static graphql.schema.GraphQLObjectType.newObject;
 import static graphql.schema.GraphQLSchema.newSchema;
+
+import com.kompeteer.web.domain.Player;
+import com.kompeteer.web.security.SecurityUtils;
 
 import graphql.schema.GraphQLFieldDefinition.Builder;
 import graphql.schema.GraphQLNonNull;
@@ -41,6 +44,7 @@ public class KompeteerGraphQLSchema {
 	        .name("query")
 	        .field(playerQuery())
 	        .field(groupQuery())
+	        .field(meQuery())
 	        .build();
 	}
 	
@@ -51,6 +55,21 @@ public class KompeteerGraphQLSchema {
 	        .field(updateGame)
 	        .field(deleteGame)
 	        .build();
+	}
+	
+	private Builder meQuery() { 
+		return newFieldDefinition()
+            .name("me")
+            .type(PlayerType)
+            .dataFetcher(env -> {
+            	Player player = new Player();
+           	 
+           	 	String user = SecurityUtils.getCurrentUserLogin();
+           	 
+           	 	player.setFirstName(user);
+           	 
+           	 	return player;
+            });
 	}
 	
 	private Builder playerQuery() { 
