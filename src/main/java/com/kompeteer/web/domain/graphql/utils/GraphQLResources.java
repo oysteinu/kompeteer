@@ -1,6 +1,7 @@
 package com.kompeteer.web.domain.graphql.utils;
 
 import com.kompeteer.web.service.GraphQLService;
+import com.kompeteer.web.service.UserService;
 import com.kompeteer.web.service.business.GameBS;
 import com.kompeteer.web.service.business.GroupBS;
 import com.kompeteer.web.service.business.PlayerBS;
@@ -8,6 +9,10 @@ import com.kompeteer.web.service.business.PlayerBS;
 import graphql.schema.DataFetchingEnvironment;
 
 public class GraphQLResources {
+	public static UserService getUserService(final DataFetchingEnvironment env) {
+		return context(env).getUserService();
+	}
+	
 	public static PlayerBS getPlayerBS(final DataFetchingEnvironment env) {
 		return context(env).getPlayerBS();
 	}

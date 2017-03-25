@@ -43,7 +43,7 @@ public class GraphQLServiceTest extends AbstractEntityTestBase {
 		GroupBS groupsBS = new GroupBS(mockGroupsRepository);
 		GameBS gameBS = new GameBS(mockGameRepository, mockGamesService);
 		
-		service = new GraphQLService(playerBS, groupsBS, gameBS);
+		service = new GraphQLService(playerBS, groupsBS, gameBS, null);
 	}
 
 	@Test

@@ -18,18 +18,21 @@ public class GraphQLService {
 	private final PlayerBS playerBS;
 	private final GroupBS groupBS;
 	private final GameBS gameBS;
+	private final UserService userService;
 	
 	@Autowired
 	public GraphQLService(
 			PlayerBS playerBS,
 			GroupBS groupBS,
-			GameBS gameBS) throws Exception {
+			GameBS gameBS,
+			UserService userService) throws Exception {
 		
 		graphql = new GraphQL(new KompeteerGraphQLSchema().getSchema());
 		
 		this.playerBS = playerBS;
 		this.groupBS = groupBS;
 		this.gameBS = gameBS;
+		this.userService = userService;
 	}
 
 	public ExecutionResult query(String query) {
@@ -48,5 +51,9 @@ public class GraphQLService {
 	
 	public GameBS getGameBS() {
 		return gameBS;
+	}
+	
+	public UserService getUserService() {
+		return userService;
 	}
 }
