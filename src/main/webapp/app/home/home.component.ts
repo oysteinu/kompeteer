@@ -7,7 +7,9 @@ import { EventManager, JhiLanguageService } from 'ng-jhipster';
 import { Account, LoginModalService, Principal } from '../shared';
 
 interface PlayerQuery {
+  id: number;
   firstName: string;
+  lastName: string;
 }
 
 interface MeQuery {
@@ -17,7 +19,21 @@ interface MeQuery {
 const PlayerForCurrentUser = gql`
   query PlayerForCurrentUser {
     me {
+      id
       firstName
+      lastName
+
+      groups {
+          id
+          name
+      }
+
+      games {
+          id
+          player1 { id firstName lastName }
+          player2 { id firstName lastName }
+          result
+      }
     }
   }
 `;

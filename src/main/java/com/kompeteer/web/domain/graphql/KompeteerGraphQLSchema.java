@@ -15,7 +15,7 @@ import static graphql.schema.GraphQLObjectType.newObject;
 import static graphql.schema.GraphQLSchema.newSchema;
 
 import com.kompeteer.web.domain.Player;
-import com.kompeteer.web.security.SecurityUtils;
+import com.kompeteer.web.domain.User;
 
 import graphql.schema.GraphQLFieldDefinition.Builder;
 import graphql.schema.GraphQLNonNull;
@@ -65,11 +65,13 @@ public class KompeteerGraphQLSchema {
             .dataFetcher(env -> {
             	Player player = new Player();
            	 
-           	 	String name = getUserService(env).getUserWithAuthorities().getLogin();
+           	 	User user = getUserService(env).getUserWithAuthorities();
+           	 	
+           	 	if (user == null) {
+           	 		return player;
+           	 	}
            	 
-           	 	player.setFirstName(name);
-           	 
-           	 	return player;
+           	 	return getPlayerBS(env).findPlayerByUser(user.getId());
             });
 	}
 	

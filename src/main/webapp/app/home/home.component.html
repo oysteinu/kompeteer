@@ -1,6 +1,13 @@
 <div class="row">
     <div class="col-md-3">
-        <p> {{ player.firstName }} </p>
+        <p> {{ player.firstName }} {{ player.lastName }}</p>
+
+        <ul>
+            <li *ngFor="let game of player.games">
+                <span [ngClass]="{'winner': game.result === 'PLAYER1'}" class="game-p1">{{ game.player1.firstName }} {{ game.player1.lastName }}</span> vs. 
+                <span [ngClass]="{'winner': game.result === 'PLAYER2'}" class="game-p2">{{ game.player2.firstName }} {{ game.player2.lastName }}</span>
+            </li>
+        </ul>
     </div>
     <div class="col-md-9">
         <div [ngSwitch]="isAuthenticated()">
