@@ -24,6 +24,10 @@ public class PlayerBS {
 		return playerRepository.getOne(playerId);
 	}
 	
+	public Player findPlayerByUser(long userId) {
+		return playerRepository.findByUserId(userId);
+	}
+	
 	public List<Game> getGames(long playerId) {
 		Player player = getPlayer(playerId);
 		

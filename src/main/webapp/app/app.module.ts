@@ -1,12 +1,16 @@
 import './vendor.ts';
 
+import { provideApolloClient } from './blocks/apollo-client.provider';
+import { ApolloModule } from 'apollo-angular';
+
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
-import { Ng2Webstorage } from 'ng2-webstorage';
+import { LocalStorageService, SessionStorageService, Ng2Webstorage } from 'ng2-webstorage';
 
 import { KompeteerSharedModule, UserRouteAccessService } from './shared';
 import { KompeteerHomeModule } from './home/home.module';
+import { KompeteerGroupModule } from './group/group.module';
 import { KompeteerAdminModule } from './admin/admin.module';
 import { KompeteerAccountModule } from './account/account.module';
 import { KompeteerEntityModule } from './entities/entity.module';
@@ -25,14 +29,15 @@ import {
     ErrorComponent
 } from './layouts';
 
-
 @NgModule({
     imports: [
         BrowserModule,
+        ApolloModule.forRoot(provideApolloClient),
         LayoutRoutingModule,
         Ng2Webstorage.forRoot({ prefix: 'jhi', separator: '-'}),
         KompeteerSharedModule,
         KompeteerHomeModule,
+        KompeteerGroupModule,
         KompeteerAdminModule,
         KompeteerAccountModule,
         KompeteerEntityModule

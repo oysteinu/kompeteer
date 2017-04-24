@@ -7,6 +7,7 @@ import static com.kompeteer.web.domain.graphql.types.GroupQLType.GroupType;
 import static com.kompeteer.web.domain.graphql.types.PlayerQLType.PlayerType;
 import static com.kompeteer.web.domain.graphql.utils.GraphQLResources.getGroupBS;
 import static com.kompeteer.web.domain.graphql.utils.GraphQLResources.getPlayerBS;
+import static com.kompeteer.web.domain.graphql.utils.GraphQLResources.getUserService;
 import static graphql.Scalars.GraphQLLong;
 import static graphql.schema.GraphQLArgument.newArgument;
 import static graphql.schema.GraphQLFieldDefinition.newFieldDefinition;
@@ -14,7 +15,7 @@ import static graphql.schema.GraphQLObjectType.newObject;
 import static graphql.schema.GraphQLSchema.newSchema;
 
 import com.kompeteer.web.domain.Player;
-import com.kompeteer.web.security.SecurityUtils;
+import com.kompeteer.web.domain.User;
 
 import graphql.schema.GraphQLFieldDefinition.Builder;
 import graphql.schema.GraphQLNonNull;
@@ -64,11 +65,13 @@ public class KompeteerGraphQLSchema {
             .dataFetcher(env -> {
             	Player player = new Player();
            	 
-           	 	String user = SecurityUtils.getCurrentUserLogin();
+           	 	User user = getUserService(env).getUserWithAuthorities();
+           	 	
+           	 	if (user == null) {
+           	 		return player;
+           	 	}
            	 
-           	 	player.setFirstName(user);
-           	 
-           	 	return player;
+           	 	return getPlayerBS(env).findPlayerByUser(user.getId());
             });
 	}
 	

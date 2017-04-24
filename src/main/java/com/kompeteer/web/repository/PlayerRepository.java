@@ -18,5 +18,7 @@ public interface PlayerRepository extends JpaRepository<Player,Long> {
 
     @Query("select player from Player player left join fetch player.tournaments left join fetch player.groups where player.id =:id")
     Player findOneWithEagerRelationships(@Param("id") Long id);
-
+    
+    @Query("select player from Player player where player.user.id =:userId")
+    Player findByUserId(@Param("userId") Long userId);
 }
