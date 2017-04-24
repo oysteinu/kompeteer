@@ -1,5 +1,7 @@
 package com.kompeteer.web.service;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +41,14 @@ public class GraphQLService {
 		ExecutionResult executionResult = graphql.execute(query, this);
 
 		return executionResult;
+	}
+	
+	public ExecutionResult query(String query, String operationName, Map<String, Object> variables) {
+		if (variables != null) {
+			return graphql.execute(query, operationName, this, variables);
+		} else {
+			return graphql.execute(query, this);
+		}
 	}
 	
 	public PlayerBS getPlayerBS() {

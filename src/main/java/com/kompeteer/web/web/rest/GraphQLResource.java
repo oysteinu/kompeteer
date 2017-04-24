@@ -1,6 +1,8 @@
 package com.kompeteer.web.web.rest;
 
 import java.net.URISyntaxException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.kompeteer.web.service.GraphQLService;
 
 import graphql.ExecutionResult;
@@ -38,7 +39,14 @@ public class GraphQLResource {
 	
 	@PostMapping("/graphql")
 	@Timed
-	public ExecutionResult post(@RequestBody JsonNode query) throws URISyntaxException {
-		return service.query(query.get("query").asText());
+	public ExecutionResult post(@RequestBody Map body) throws URISyntaxException {
+		String query = (String) body.get("query");
+	    
+		Map<String, Object> variables = (Map<String, Object>) body.get("variables");
+	    
+		return service.query(query, null, variables);
+		
+		// return service.query(query.get("query").asText());
+		
 	}
 }
